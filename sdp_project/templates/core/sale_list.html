@@ -1,0 +1,19 @@
+{% extends "core/base.html" %}
+{% block title %}My Sales{% endblock %}
+{% block content %}
+  <h1>My Sales</h1>
+  <p><a href="{% url 'sale_add' %}">+ Add New Sale</a></p>
+  <table>
+    <tr><th>Date</th><th>Amount</th><th>Description</th><th>Edit</th></tr>
+    {% for sale in sales %}
+      <tr>
+        <td>{{ sale.date }}</td>
+        <td>${{ sale.amount }}</td>
+        <td>{{ sale.description }}</td>
+        <td><a href="{% url 'sale_edit' sale.pk %}">Edit</a></td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="4">No sales yet.</td></tr>
+    {% endfor %}
+  </table>
+{% endblock %}
