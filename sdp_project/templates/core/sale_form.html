@@ -4,7 +4,7 @@
   <h1>{% if object %}Edit{% else %}Add{% endif %} Sale</h1>
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form.as_p }}       {# will only render amount and description #}
     <button type="submit">
       {% if object %}Save Changes{% else %}Create Sale{% endif %}
     </button>
