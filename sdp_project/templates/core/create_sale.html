@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+{% block title %}{% if sale %}Edit{% else %}Create{% endif %} Sale{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  {% if sale %}
+    <h2>Edit Sale</h2>
+  {% else %}
+    <h2>Create Sale</h2>
+  {% endif %}
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="id_customer" class="form-label">Customer</label>
+      <input type="text" name="customer" id="id_customer" class="form-control"
+             value="{{ sale.customer|default_if_none:'' }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="id_item" class="form-label">Item</label>
+      <input type="text" name="item" id="id_item" class="form-control"
+             value="{{ sale.item|default_if_none:'' }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="id_quantity" class="form-label">Quantity</label>
+      <input type="number" name="quantity" id="id_quantity" class="form-control"
+             value="{{ sale.quantity|default_if_none:'' }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="id_total_price" class="form-label">Total Price</label>
+      <input type="text" name="total_price" id="id_total_price" class="form-control"
+             value="{{ sale.total_price|default_if_none:'' }}" required>
+    </div>
+    <!-- Add more fields as needed -->
+    <button type="submit" class="btn btn-primary">
+      {% if sale %}Update{% else %}Create{% endif %} Sale
+    </button>
+    <a href="{% url 'sale_list' %}" class="btn btn-secondary ms-2">Cancel</a>
+  </form>
+</div>
+{% endblock %}

@@ -3,8 +3,6 @@ from .models import Sale
 
 class SaleForm(forms.ModelForm):
     class Meta:
-        model  = Sale
-        fields = ['amount', 'description']
-        widgets = {
-            'date': forms.DateInput(attrs={'type': 'date'}),
-        }
+        model = Sale
+        fields = ['title', 'description', 'price']
+        

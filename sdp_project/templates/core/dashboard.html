@@ -1,4 +1,9 @@
 {% extends "core/base.html" %}
-{% load static %}
-
 {% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="container">
+  <h2>Dashboard</h2>
+  <p>You are logged in as {{ user.username }}.</p>
+  <!-- Additional dashboard content (e.g. user's sales) -->
+</div>
+{% endblock %}

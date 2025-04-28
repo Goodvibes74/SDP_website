@@ -1,63 +1,74 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <!-- Ensure responsive behavior on mobile -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{% block title %}SDP Website{% endblock %}</title>
-    
+
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <!-- Bootstrap Icons CSS -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap-icons.css' %}">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-<div class="d-flex">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet" />
+    <!-- Your custom styles -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
 
-  <!-- Sidebar -->
-  <nav class="bg-light border-end vh-100 p-3" style="width: 200px;">
-    <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item">
-        <a href="{% url 'home' %}" class="nav-link">Home</a>
-      </li>
-      <li>
-        <a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a>
-      </li>
-      <li>
-        <a href="{% url 'browse_sales' %}">Browse Sales</a>
-      </li>
-      <li>
-        <a href="{% url 'create_sale' %}" class="nav-link">Create Sale</a>
-      </li>
-      <li>
-        <a href="{% url 'about' %}" class="nav-link">About Us</a>
-      </li>
-      <li>
-        <a href="{% url 'contact' %}" class="nav-link">Contact</a>
-      </li>
-      <li>
-        <a href="{% url 'login' %}" class="nav-link">Login / Register</a>
-      </li>
-    </ul>
-  </nav>
+    {% block head_extra %}{% endblock %}
+  </head>
+  <body class="d-flex vh-100">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar bg-light border-end p-3 flex-shrink-0">
+      <h5 class="mb-3">SDP Website</h5>
+      <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'browse_sales' %}">Browse Sales</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'create_sale' %}">Create Sale</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'about' %}">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+        </li>
 
-  <!-- Main content area -->
-  <div class="flex-grow-1 p-4">
-    {% block content %}
-    <!-- Content of child templates goes here -->
-    {% endblock %}
-  </div>
+        {% if user.is_authenticated %}
+        <li class="nav-item mt-3">
+          <a class="nav-link text-danger" href="{% url 'logout' %}">
+            <i class="bi bi-box-arrow-right"></i> Logout
+          </a>
+        </li>
+        {% else %}
+        <li class="nav-item mt-3">
+          <a class="nav-link" href="{% url 'login' %}">
+            <i class="bi bi-box-arrow-in-right"></i> Login/Register
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
 
-</div>
+    <!-- Main area: optional Hero + Page Content -->
+    <div class="flex-grow-1 d-flex flex-column flex-md-row">
+      <!-- Page Content -->
+      <main class="flex-grow-1 p-4 overflow-auto">
+        {% block content %}
+        <!-- Default content if not overridden -->
+        <h2>Page</h2>
+        <p>Replace this with your own page content.</p>
+        {% endblock %}
+      </main>
+    </div>
 
-<!-- Bootstrap JS Bundle (includes Popper) -->
-<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-</body>
+    <!-- Bootstrap JS Bundle -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    {% block scripts %}{% endblock %}
+  </body>
 </html>
-<!-- End of base.html -->
-<!-- This is the base template for the SDP project. It includes a sidebar for navigation and a main content area. 
-     The sidebar contains links to different sections of the website, and the main content area is where the specific 
-     content of each page will be displayed. The template uses Bootstrap for styling and layout. -->

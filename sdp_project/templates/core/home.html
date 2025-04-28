@@ -1,6 +1,23 @@
 {% extends "core/base.html" %}
-{% block title %}Home{% endblock %}
+
+{% block title %}
+Home
+{% endblock %}
+
 {% block content %}
-  <h1>Home Page</h1>
-  <p>Welcome to your SDP prototype!</p>
+<h1>Home Page</h1>
+<p>Welcome to your SDP prototype!</p>
+<!-- Hero Section (override in child if needed) -->
+<aside
+  class="bg-primary text-white p-4 d-none d-md-flex flex-column justify-content-center"
+  style="width: 35%"
+>
+  {% block hero_title %}
+  <h1 class="display-5">Welcome to SDP Website</h1>
+  {% endblock %}
+
+  {% block hero_text %}
+  <p class="lead">Your project tagline or description here.</p>
+  {% endblock %}
+</aside>
 {% endblock %}

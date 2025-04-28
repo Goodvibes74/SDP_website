@@ -1,0 +1,49 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\title{Django Sales App Project Report}
+\author{Group Members: Name1, Name2, Name3, Name4}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+Provide an overview of your Django Sales App here. Discuss the purpose of the application and its main features. You might mention the key pages (Home, Dashboard, Browse Sales, etc.) and the goals of the project.
+
+\section{Part a: HTML and Django Template Code Implementation}
+In this section, include your HTML and Django template code for the project layout.
+
+\subsection{Base Template Explanation}
+Explain the structure of your base template (e.g., navigation bar, hero/jumbotron section, footer). Discuss how you set up the content blocks that child templates will override.
+
+\subsection{Child Template Example}
+Provide an example of a child template that extends the base template. For example, this could be the HTML for the Home or Browse Sales page. Show how it uses template blocks from the base template.
+
+\subsection{Use of Template Tags}
+Describe the Django template tags you used and their purpose. Examples include \verb|{% extends %}|, \verb|{% block %}|, and \verb|{% static %}|. Explain how each tag helps organize your templates.
+
+\subsection{Bonus: URL and View Structure}
+(Optional) Show how your \texttt{urls.py} and \texttt{views.py} relate to the templates above. Include any relevant snippets of URL patterns or view functions.
+
+\section{Part b: Benefits of Django for Responsive Web Apps}
+Discuss why Django is beneficial for building responsive web applications. Mention Django’s template system (separation of concerns), integration with CSS frameworks (like Bootstrap), and built-in features (such as security and scalability).
+
+\section{Part c: Linking Static CSS and JavaScript in Django}
+Explain how to include static files (CSS, JavaScript) in your Django project:
+\begin{enumerate}
+    \item Configure \texttt{STATIC\_URL} in \texttt{settings.py}.
+    \item Use \verb|{% load static %}| at the top of your templates.
+    \item Reference static files with \verb|{% static 'path/to/filename.css' %}| in your HTML.
+\end{enumerate}
+
+\section{Part d: Components of MTV Architecture in Django}
+Describe the Model-Template-View (MTV) components in Django:
+\begin{itemize}
+    \item \textbf{Model:} Define its role in data management (e.g., in this project, Sales models handle product data).
+    \item \textbf{View:} Describe how views handle requests and generate responses (e.g., your view functions or classes for Home, Browse, etc.).
+    \item \textbf{Template:} Explain the role of templates in rendering HTML (e.g., the HTML files you created for each page).
+\end{itemize}
+
+\end{document}

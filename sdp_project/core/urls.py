@@ -1,24 +1,24 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from .views import (
-    HomeView, ContactView, AboutView,
-    dashboard, messages, register,
-    SaleListView, SaleCreateView, SaleUpdateView
+    home, contact, about, dashboard, login_and_register,
+    sale_list, sale_create, sale_edit
 )
 
 urlpatterns = [
-    path('',               HomeView.as_view(),      name='home'),
-    path('contact/',       ContactView.as_view(),   name='contact'),
-    path('about/',         AboutView.as_view(),     name='about'),
+    # Public pages
+    path('',                        home,                            name='home'),
+    path('dashboard/',              dashboard,                       name='dashboard'),
+    path('about/',                  about,                           name='about'),
+    path('contact/',                contact,                         name='contact'),
 
-    path('login/',         auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
-    path('logout/',        auth_views.LogoutView.as_view(), name='logout'),
-    path('register/',      register,                name='register'),
+    # Authentication
+    path('login/',                  login_and_register,              name='login'),
+    path('logout/',                 auth_views.LogoutView.as_view(), name='logout'),
+    path('register/',               login_and_register,              name='register'),
 
-    path('dashboard/',     dashboard,               name='dashboard'),
-    path('messages/',      messages,                name='messages'),
-
-    path('sales/',         SaleListView.as_view(),   name='sale_list'),
-    path('sales/add/',     SaleCreateView.as_view(), name='sale_add'),
-    path('sales/<int:pk>/edit/', SaleUpdateView.as_view(), name='sale_edit'),
+    # Sales (function-based)
+    path('sales/',                  sale_list,                       name='browse_sales'),
+    path('sales/create/',           sale_create,                     name='create_sale'),
+    path('sales/<int:pk>/edit/',    sale_edit,                       name='edit_sale'),
 ]
