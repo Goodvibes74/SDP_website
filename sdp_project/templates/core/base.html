@@ -11,6 +11,7 @@
 </head>
 <body>
     {% comment %} Navbar with brand and menu links {% endcomment %}
+    {# This is the navigation bar #}
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="{% url 'home' %}">SaleApp</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -34,12 +35,16 @@
     </div>
 
     {% comment %} Footer section with app info and social icons {% endcomment %}
-    <footer class="footer bg-light text-center py-3">
-        <small>&copy; 2025 SaleApp. Follow us on:
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-facebook"></i></a>
-        </small>
+    <footer class="text-center mt-auto py-3 bg-light">
+      <div class="container">
+        <p class="mb-0">© 2025 SDP Website | Follow us on 
+          <a href="#">Facebook</a>, 
+          <a href="#">Twitter</a>, 
+          <a href="#">Instagram</a>
+        </p>
+      </div>
     </footer>
+    
 
     <!-- Bootstrap JS and dependencies -->
     <script src="{% static 'js/jquery.min.js' %}"></script>

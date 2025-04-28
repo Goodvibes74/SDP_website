@@ -1,23 +1,38 @@
-<!-- browse_sale.html -->
 {% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Sales List{% endblock %}
 {% block content %}
-<h2>Browse Sales</h2>
-<div class="row">
-    {% for sale in sales %}
-    <div class="col-md-4 mb-3">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">{{ sale.title }}</h5>
-                <p class="card-text">{{ sale.description|truncatechars:100 }}</p>
-                <p class="card-text"><strong>Price:</strong> ${{ sale.price }}</p>
-            </div>
-            <div class="card-footer text-center">
-                <a href="{% url 'sale_detail' sale.id %}" class="btn btn-primary">View</a>
-            </div>
-        </div>
-    </div>
-    {% empty %}
-    <p>No sales available.</p>
-    {% endfor %}
+<div class="container mt-4">
+  <h2>Sales</h2>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead class="table-light">
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Created At</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for sale in sales %}
+        <tr>
+          <td>{{ sale.id }}</td>
+          <td>{{ sale.title }}</td>
+          <td>{{ sale.description }}</td>
+          <td>${{ sale.price }}</td>
+          <td>{{ sale.created_at }}</td>
+          <td>
+            <a href="{% url 'edit_sale' sale.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6">No sales found.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 {% endblock %}

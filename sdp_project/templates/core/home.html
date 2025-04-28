@@ -1,11 +1,11 @@
-{% extends 'core/base.html' %}
+{% extends "core/base.html" %}
+{% block title %}Home{% endblock %}
 {% block content %}
-    {% comment %} Jumbotron hero section on home {% endcomment %}
-    <div class="jumbotron text-center bg-light">
-        <h1 class="display-4">Welcome to SaleApp!</h1>
-        <p class="lead">Find great deals or sell your items easily.</p>
-        <a class="btn btn-primary btn-lg" href="{% url 'browse_sales' %}" role="button">
-            Browse Sales
-        </a>
-    </div>
+<div class="p-5 mb-4 bg-light rounded-3">
+  <div class="container-fluid py-5">
+    <h1 class="display-5 fw-bold">Welcome to SDP Website</h1>
+    <p class="col-md-8 fs-4">Your project tagline or description here.</p>
+    <a href="{% url 'create_sale' %}" class="btn btn-primary btn-lg">Get Started</a>
+  </div>
+</div>
 {% endblock %}
