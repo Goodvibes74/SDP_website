@@ -1,74 +1,48 @@
+<!-- base.html -->
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{% block title %}SDP Website{% endblock %}</title>
-
+<html>
+<head>
+    <title>SaleApp</title>
     <!-- Bootstrap CSS -->
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
-    <!-- Bootstrap Icons -->
-    <link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet" />
-    <!-- Your custom styles -->
-    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
-
-    {% block head_extra %}{% endblock %}
-  </head>
-  <body class="d-flex vh-100">
-    <!-- Sidebar Navigation -->
-    <nav class="sidebar bg-light border-end p-3 flex-shrink-0">
-      <h5 class="mb-3">SDP Website</h5>
-      <ul class="nav nav-pills flex-column">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'home' %}">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'browse_sales' %}">Browse Sales</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'create_sale' %}">Create Sale</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'about' %}">About Us</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'contact' %}">Contact</a>
-        </li>
-
-        {% if user.is_authenticated %}
-        <li class="nav-item mt-3">
-          <a class="nav-link text-danger" href="{% url 'logout' %}">
-            <i class="bi bi-box-arrow-right"></i> Logout
-          </a>
-        </li>
-        {% else %}
-        <li class="nav-item mt-3">
-          <a class="nav-link" href="{% url 'login' %}">
-            <i class="bi bi-box-arrow-in-right"></i> Login/Register
-          </a>
-        </li>
-        {% endif %}
-      </ul>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {% comment %} Navbar with brand and menu links {% endcomment %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="{% url 'home' %}">SaleApp</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse"
+              data-target="#navbarNav" aria-controls="navbarNav"
+              aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+              <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'create_sale' %}">Create</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'browse_sales' %}">Browse</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a></li>
+          </ul>
+      </div>
     </nav>
 
-    <!-- Main area: optional Hero + Page Content -->
-    <div class="flex-grow-1 d-flex flex-column flex-md-row">
-      <!-- Page Content -->
-      <main class="flex-grow-1 p-4 overflow-auto">
-        {% block content %}
-        <!-- Default content if not overridden -->
-        <h2>Page</h2>
-        <p>Replace this with your own page content.</p>
-        {% endblock %}
-      </main>
+    {% comment %} Main content block for child templates {% endcomment %}
+    <div class="container my-4">
+        {% block content %}{% endblock %}
     </div>
 
-    <!-- Bootstrap JS Bundle -->
+    {% comment %} Footer section with app info and social icons {% endcomment %}
+    <footer class="footer bg-light text-center py-3">
+        <small>&copy; 2025 SaleApp. Follow us on:
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+        </small>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    {% block scripts %}{% endblock %}
-  </body>
+</body>
 </html>

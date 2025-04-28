@@ -1,9 +1,16 @@
-{% extends "core/base.html" %}
-{% block title %}Dashboard{% endblock %}
+<!-- dashboard.html -->
+{% extends 'core/base.html' %}
 {% block content %}
-<div class="container">
-  <h2>Dashboard</h2>
-  <p>You are logged in as {{ user.username }}.</p>
-  <!-- Additional dashboard content (e.g. user's sales) -->
+<h2>Dashboard</h2>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card text-center mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Sales</h5>
+                <p class="card-text display-4">{{ total_sales }}</p>
+            </div>
+        </div>
+    </div>
+    <!-- Additional metric cards can be added similarly -->
 </div>
 {% endblock %}
