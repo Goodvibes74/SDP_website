@@ -1,8 +1,8 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from .views import (
-    home, contact, about, dashboard, login_and_register,
-    sale_list, sale_create, sale_edit
+    home, contact, about, dashboard, login, register,
+    sale_list, sale_create, sale_edit, logout
 )
 
 urlpatterns = [
@@ -13,9 +13,9 @@ urlpatterns = [
     path('contact/',                contact,                         name='contact'),
 
     # Authentication
-    path('login/',                  login_and_register,              name='login'),
-    path('logout/',                 auth_views.LogoutView.as_view(), name='logout'),
-    path('register/',               login_and_register,              name='register'),
+    path('login/',                  login,              name='login'),
+    path('logout/',                 logout,             name='logout'),
+    path('register/',               register,              name='register'),
 
     # Sales (function-based)
     path('sales/',                  sale_list,                       name='browse_sales'),

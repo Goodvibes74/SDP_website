@@ -1,11 +1,23 @@
 {% extends "core/base.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<div class="p-5 mb-4 bg-light rounded-3">
-  <div class="container-fluid py-5">
-    <h1 class="display-5 fw-bold">Welcome to SDP Website</h1>
-    <p class="col-md-8 fs-4">Your project tagline or description here.</p>
-    <a href="{% url 'create_sale' %}" class="btn btn-primary btn-lg">Get Started</a>
+{% comment %} Jumbotron hero section on home {% endcomment %}
+<div class="jumbotron text-left bg-light w-auto px-2">
+  <div class="p-5 text-center bg-body-tertiary rounded-10">
+    <svg class="bi mt-4 mb-3" style="color: var(--bs-indigo)" width="100" height="100">
+      <use xlink:href="#bootstrap"></use>
+    </svg>
+    <h1 class="text-body-emphasis">Welcome to SaleApp!</h1>
+    <p class="col-lg-8 mx-auto fs-5 text-muted">
+      <i>"This is a custom jumbotron featuring an SVG image at the top, some
+      longer text that wraps early thanks to a responsive
+      <code>.col-*</code> class, and a customized call to action.""</i>
+      Find great deals or sell your items easily.
+    </p>
+    <div class="d-grid gap-2 d-md-block">
+      <a class="btn btn-primary" href="{% url 'login' %}" role="button">Log In</a>
+      <a class="btn btn-secondary" href="{% url 'register' %}" role="button">Register</a>
+    </div>
   </div>
 </div>
 {% endblock %}

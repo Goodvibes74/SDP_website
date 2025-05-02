@@ -1,21 +1,64 @@
-{% extends 'core/base.html' %}
-{% load static %}
-{% block title %}{% if sale %}Edit{% else %}Create{% endif %} Sale{% endblock %}
+{% extends 'core/base.html' %} 
+{% load static %} 
+{% block title %}
+{% if sale%}
+Edit
+{% else %}
+Create
+{% endif %} 
+Sale
+{% endblock %} 
 {% block content %}
 <div class="container mt-4">
   {% if sale %}
-    <h2>Edit Sale</h2>
+  <h2>Edit Sale</h2>
   {% else %}
-    <h2>Create Sale</h2>
+  <h2>Create Sale</h2>
   {% endif %}
-  
+
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        name="title"
+        required
+        value="{{ sale.title|default_if_none:'' }}"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea
+        class="form-control"
+        id="description"
+        name="description"
+        required
+      >
+{{ sale.description|default_if_none:'' }}</textarea
+      >
+    </div>
+    <div class="mb-3">
+      <label for="amount" class="form-label">Amount</label>
+      <input
+        type="number"
+        class="form-control"
+        id="amount"
+        name="amount"
+        required
+        value="{{ sale.amount|default_if_none:'' }}"
+      />
+    </div>
     <button type="submit" class="btn btn-primary">
       {% if sale %}Update{% else %}Create{% endif %} Sale
     </button>
-    <a href="{% url 'browse_sales' %}" class="btn btn-secondary ms-2">Cancel</a>
   </form>
+  {% if error %}
+  <div class="alert alert-danger mt-2">{{ error }}</div>
+  {% endif %} {% if success %}
+  <div class="alert alert-success mt-2">{{ success }}</div>
+  {% endif %}
 </div>
 {% endblock %}

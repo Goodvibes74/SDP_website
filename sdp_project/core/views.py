@@ -65,30 +65,55 @@ def sale_list(request):
 # Create a sale
 @login_required
 def sale_create(request):
+    error = None
     if request.method == 'POST':
-        form = SaleForm(request.POST)
-        if form.is_valid():
-            sale = form.save(commit=False)
-            sale.seller = request.user
-            sale.save()
-            return redirect('browse_sales')
-    else:
-        form = SaleForm()
-    return render(request, 'core/create_sale.html', {'form': form})
-
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        amount = request.POST.get('amount')
+        if not title or not description or not amount:
+            error = "All fields are required."
+        else:
+            try:
+                amount = float(amount)
+                sale = Sale.objects.create(
+                    title=title,
+                    description=description,
+                    amount=amount,
+                    seller=request.user
+                )
+                return redirect('browse_sales')
+            except ValueError:
+                error = "Amount must be a number."
+    return render(request, 'core/create_sale.html', {'error': error})
 # Edit a sale
+
 @login_required
 def sale_edit(request, pk):
     sale = get_object_or_404(Sale, pk=pk, seller=request.user)
-    if request.method == 'POST':
-        form = SaleForm(request.POST, instance=sale)
-        if form.is_valid():
-            form.save()
-            return redirect('browse_sales')
-    else:
-        form = SaleForm(instance=sale)
-    return render(request, 'core/create_sale.html', {'form': form, 'sale': sale})
+    error = None
+    success = None
 
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        amount = request.POST.get('amount')
+        if not title or not description or not amount:
+            error = "All fields are required."
+        else:
+            try:
+                amount = float(amount)
+                sale.title = title
+                sale.description = description
+                sale.amount = amount
+                sale.save()
+                success = "Sale updated successfully!"
+            except ValueError:
+                error = "Amount must be a number."
+    return render(request, 'core/create_sale.html', {
+        'sale': sale,
+        'error': error,
+        'success': success,
+    })
 @login_required
 def dashboard(request):
     return render(request, 'core/dashboard.html')
