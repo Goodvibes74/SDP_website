@@ -114,6 +114,13 @@ def sale_edit(request, pk):
         'error': error,
         'success': success,
     })
+def sale_delete(request, pk):
+    sale = get_object_or_404(Sale, pk=pk, seller=request.user)
+    if request.method == 'POST':
+        sale.delete()
+        return redirect('browse_sales')
+    return render(request, 'core/sale_delete.html', {'sale': sale})
+
 @login_required
 def dashboard(request):
     return render(request, 'core/dashboard.html')
