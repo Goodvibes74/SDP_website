@@ -1,50 +1,120 @@
-{% extends "core/base.html" %}
-{% comment %} {# 
-  Template: login_and_register.html
-  Description: This template is used for rendering the login and registration forms on the same page. 
-               It extends the base template "core/base.html" and defines blocks for the page title 
-               and content.
-
-  Blocks:
-    - title: Sets the page title to "Log In / Register".
-    - content: Contains the HTML structure for the login and registration forms.
-
-  Features:
-    - Login Form:
-      - Uses the POST method to submit data to the "login" URL.
-      - Includes CSRF protection with {% csrf_token %}.
-      - Dynamically renders the login form fields using {{ form.as_p }}.
-      - Includes a submit button styled with Bootstrap classes.
-
-    - Registration Form:
-      - Uses the POST method to submit data to the "register" URL.
-      - Includes CSRF protection with {% csrf_token %}.
-      - Dynamically renders the registration form fields using {{ register_form.as_p }}.
-      - Includes a submit button styled with Bootstrap classes.
-
-  Additional Notes:
-    - The container is styled with Bootstrap classes for responsive design and proper alignment.
-    - A horizontal rule (<hr>) separates the login and registration sections.
-    - Includes a prompt for users who do not have an account to register.
-#} {% endcomment %}
-{% block title %}Log In / Register{% endblock %}
+{% extends "core/base.html" %} {% comment %} {# Template:
+login_and_register.html Description: This template is used for rendering the
+login and registration forms on the same page. It extends the base template
+"core/base.html" and defines blocks for the page title and content. Blocks: -
+title: Sets the page title to "Log In / Register". - content: Contains the HTML
+structure for the login and registration forms. Features: - Login Form: - Uses
+the POST method to submit data to the "login" URL. - Includes CSRF protection
+with {% csrf_token %}. - Dynamically renders the login form fields using {{
+form.as_p }}. - Includes a submit button styled with Bootstrap classes. -
+Registration Form: - Uses the POST method to submit data to the "register" URL.
+- Includes CSRF protection with {% csrf_token %}. - Dynamically renders the
+registration form fields using {{ register_form.as_p }}. - Includes a submit
+button styled with Bootstrap classes. Additional Notes: - The container is
+styled with Bootstrap classes for responsive design and proper alignment. - A
+horizontal rule (
+<hr />
+) separates the login and registration sections. - Includes a prompt for users
+who do not have an account to register. #} {% endcomment %} {% block title %}Log
+In{% endblock %} 
 {% block content %}
-  <div class="container mt-5" style="max-width: 400px;">
-    <h2 class="mb-4 text-center">Log In</h2>
-    <form method="post" action="{% url 'login' %}">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" class="btn btn-primary w-100">Log In</button>
-    </form>
 
-    <hr class="my-4" />
-
-    <p class="text-center">Don’t have an account?</p>
-    <h2 class="mb-4 text-center">Register</h2>
-    <form method="post" action="{% url 'register' %}">
-      {% csrf_token %}
-      {{ register_form.as_p }}
-      <button type="submit" class="btn btn-secondary w-100">Sign Up</button>
-    </form>
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login-tab-pane" type="button" role="tab" aria-controls="login-tab-pane" aria-selected="true">Login</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register-tab-pane" type="button" role="tab" aria-controls="register-tab-pane" aria-selected="false">Register</button>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    
+    <div class="tab-pane fade show active" id="login-tab-pane" role="tabpanel" aria-labelledby="login-tab" tabindex="0">
+      <form method="post" action="{% url 'login' %}" class="row g-3">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="inputUsername" class="form-label">Username</label>
+          <input type="text" class="form-control" id="inputUsername" name="username" placeholder="Enter your username">
+        </div>
+        <div class="mb-3">
+          <label for="inputPassword4" class="form-label">Password</label>
+          <input type="password" class="form-control" id="inputPassword4" name="password" placeholder="Enter your password">
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary w-100">Sign in</button>
+        </div>
+      </form>
+    </div>
+    
+  <div class="tab-pane fade" id="register-tab-pane" role="tabpanel" aria-labelledby="register-tab" tabindex="0">
+      <form method="post" action="{% url 'register' %}" class="row g-3">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="userName" class="form-label">Username</label>
+          <input type="text" class="form-control" id="userName" name="username" placeholder="Enter your username">
+        </div>
+        <div class="mb-3">
+          <label for="registerEmail" class="form-label">Email</label>
+          <input type="email" class="form-control" id="registerEmail" name="email" placeholder="Enter your email">
+        </div>
+        <div class="mb-3">
+          <label for="registerPassword" class="form-label">Password</label>
+          <input type="password" class="form-control" id="registerPassword" name="password1" placeholder="Enter your password">
+        </div>
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" id="confirmPassword" name="password2" placeholder="Confirm your password">
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary w-100">Register</button>
+        </div>
+      </form>
+    </div>
+  </div>
+      </form>
+    </div>
+  </div>
   </div>
 {% endblock %}
+{% comment %} <div class="col-12">
+    <label for="inputAddress" class="form-label">Address</label>
+    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+  </div>
+  <div class="col-12">
+    <label for="inputAddress2" class="form-label">Address 2</label>
+    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+  </div>
+  <div class="col-md-6">
+    <label for="inputCity" class="form-label">City</label>
+    <input type="text" class="form-control" id="inputCity">
+  </div>
+  <div class="col-md-4">
+    <label for="inputState" class="form-label">State</label>
+    <select id="inputState" class="form-select">
+      <option selected>Choose...</option>
+      <option>...</option>
+    </select>
+  </div>
+  <div class="col-md-2">
+    <label for="inputZip" class="form-label">Zip</label>
+    <input type="text" class="form-control" id="inputZip">
+  </div>
+  <div class="col-12">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="gridCheck">
+      <label class="form-check-label" for="gridCheck">
+        Check me out
+      </label>
+    </div> 
+  </div>{% endcomment %}
+
+{% comment %} <div
+  class="jumbotron text-left bg-light w-500 p-5 m-auto"
+  style="max-width: 400px"
+>
+  <h2 class="mb-4 text-center">Log In</h2>
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit" class="btn btn-primary w-100">Log In</button>
+  </form>
+</div> {% endcomment %}
