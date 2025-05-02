@@ -1,9 +1,11 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
-from .forms import SaleForm
-from .models import Sale
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import logout as auth_logout
+from django.contrib.auth import login as auth_login
+from .forms import SaleForm ,CustomUserCreationForm, CustomAuthenticationForm
+from .models import Sale
         
         
 def home(request):
@@ -15,33 +17,46 @@ def about(request):
 def contact(request):
     return render(request, 'core/contact.html')
 
-def login_and_register(request):
-    # Initialize the login and registration forms
-    login_form = AuthenticationForm()
-    register_form = UserCreationForm()
+def login(request):
+    login_form = CustomAuthenticationForm(request, data=request.POST or None)
+    login_error = None
 
     if request.method == 'POST':
-        # Handle login form submission
-        if 'login' in request.POST:
-            login_form = AuthenticationForm(request, data=request.POST)
-            if login_form.is_valid():
-                # Authenticate and log in the user
-                user = login_form.get_user()
-                login(request, user)
-                return redirect('dashboard')
-        # Handle registration form submission
-        elif 'register' in request.POST:
-            register_form = UserCreationForm(request.POST)
-            if register_form.is_valid():
-                # Save the new user and redirect to login
-                register_form.save()
-                return redirect('login')
-
-    # Render the login and registration page with the forms
+        if login_form.is_valid():
+            print("Form is vaid")
+            user = login_form.get_user()
+            auth_login(request, user)
+            return redirect('dashboard')
+        else:
+            login_error = "Invalid login credentials."
+            print(login_error)
+            print(login_form.errors.as_json())
     return render(request, 'core/login_and_register.html', {
         'form': login_form,
-        'register_form': register_form,
+        'register_form': CustomUserCreationForm(),
+        'login_error': login_error,
+        'active_tab': 'login',
     })
+    
+    
+def register(request):
+    register_form = CustomUserCreationForm(request.POST or None)
+    register_error = None
+
+    if request.method == 'POST':
+        if register_form.is_valid():
+            register_form.save()
+            return redirect('login')
+        else:
+            register_error = "Registration failed. Please check the form."
+
+    return render(request, 'core/login_and_register.html', {
+        'form': CustomAuthenticationForm(),
+        'register_form': register_form,
+        'register_error': register_error,
+        'active_tab': 'register',
+    })
+
 @login_required
 def sale_list(request):
     sales = Sale.objects.filter(seller=request.user).order_by('-created_at')
@@ -75,6 +90,10 @@ def sale_edit(request, pk):
     return render(request, 'core/create_sale.html', {'form': form, 'sale': sale})
 
 @login_required
-
 def dashboard(request):
     return render(request, 'core/dashboard.html')
+
+@login_required
+def logout(request):
+    auth_logout(request)
+    return redirect('home')
