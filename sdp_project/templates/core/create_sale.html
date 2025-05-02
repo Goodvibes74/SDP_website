@@ -1,14 +1,5 @@
-{% extends 'core/base.html' %} 
-{% load static %} 
-{% block title %}
-{% if sale%}
-Edit
-{% else %}
-Create
-{% endif %} 
-Sale
-{% endblock %} 
-{% block content %}
+{% extends 'core/base.html' %} {% load static %} {% block title %} {% if sale%}
+Edit {% else %} Create {% endif %} Sale {% endblock %} {% block content %}
 <div class="container mt-4">
   {% if sale %}
   <h2>Edit Sale</h2>

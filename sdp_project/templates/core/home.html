@@ -1,23 +1,87 @@
-{% extends "core/base.html" %}
-{% block title %}Home{% endblock %}
-{% block content %}
-{% comment %} Jumbotron hero section on home {% endcomment %}
-<div class="jumbotron text-left bg-light w-auto px-2">
+{% extends "core/base.html" %} {% block title %}Home{% endblock %} 
+
+{% block content %} {% comment %} Jumbotron hero section on home {% endcomment %}
+
+<div class="jumbotron text-left bg-light w-auto px-3 mb-4 rounded-3 border">
   <div class="p-5 text-center bg-body-tertiary rounded-10">
-    <svg class="bi mt-4 mb-3" style="color: var(--bs-indigo)" width="100" height="100">
+    <svg
+      class="bi mt-4 mb-3"
+      style="color: var(--bs-indigo)"
+      width="100"
+      height="100"
+    >
       <use xlink:href="#bootstrap"></use>
     </svg>
     <h1 class="text-body-emphasis">Welcome to SaleApp!</h1>
     <p class="col-lg-8 mx-auto fs-5 text-muted">
-      <i>"This is a custom jumbotron featuring an SVG image at the top, some
-      longer text that wraps early thanks to a responsive
-      <code>.col-*</code> class, and a customized call to action.""</i>
+      <i
+        >"This is a custom jumbotron featuring an SVG image at the top, some
+        longer text that wraps early thanks to a responsive
+        <code>.col-*</code> class, and a customized call to action.""</i
+      >
       Find great deals or sell your items easily.
     </p>
+  {% if not user.is_authenticated%}
     <div class="d-grid gap-2 d-md-block">
-      <a class="btn btn-primary" href="{% url 'login' %}" role="button">Log In</a>
-      <a class="btn btn-secondary" href="{% url 'register' %}" role="button">Register</a>
+      <a class="btn btn-primary" href="{% url 'login' %}" role="button"
+        >Log In</a
+      >
+      <a class="btn btn-secondary" href="{% url 'register' %}" role="button"
+        >Register</a
+      >
+    </div>
+    {% else %}
+    <div class="d-grid gap-2 d-md-block">
+      <a class="btn btn-primary" href="{% url 'about' %}" role="button"
+        >About</a
+      >
+      <a class="btn btn-secondary" href="{% url 'contact' %}" role="button"
+        >Contact</a
+      >
+    </div>
+    {% endif %}
+</div> 
+</div>
+{% if user.is_authenticated %}
+  <div class="row align-items-md-stretch">
+    <div class="col-md-6">
+      <div class="h-100 p-5 text-bg-dark rounded-3">
+        <h2>Change the background</h2>
+        <p>
+          Swap the background-color utility and add a `.text-*` color utility
+          to mix up the jumbotron look. Then, mix and match with additional
+          component themes and more.
+        </p>
+        <a
+          class="btn btn-outline-light"
+          href="{% url 'create_sale' %}"
+          role="button"
+          >Create Sale</a
+        >
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+        <h2>Add borders</h2>
+        <p>
+          Or, keep it light and add a border for some added definition to the
+          boundaries of your content. Be sure to look under the hood at the
+          source HTML here as we've adjusted the alignment and sizing of both
+          column's content for equal-height.
+        </p>
+        <a
+          class="btn btn-outline-secondary"
+          href="{% url 'browse_sales' %}"
+          role="button"
+          >Browse Sales</a
+        >
+      </div>
     </div>
   </div>
 </div>
+</div>
+{% else %}
+{% endif %}
+{% comment %} Jumbotron hero section on home {% endcomment %}
 {% endblock %}
+
