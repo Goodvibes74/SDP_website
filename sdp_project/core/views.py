@@ -4,6 +4,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import login as auth_login
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import get_user_model
+from django.shortcuts import render, redirect
 from .forms import SaleForm ,CustomUserCreationForm, CustomAuthenticationForm
 from .models import Sale
         
@@ -18,41 +21,38 @@ def contact(request):
     return render(request, 'core/contact.html')
 
 def login(request):
-    login_form = CustomAuthenticationForm(request, data=request.POST or None)
     login_error = None
-
     if request.method == 'POST':
-        if login_form.is_valid():
-            print("Form is vaid")
-            user = login_form.get_user()
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
             auth_login(request, user)
             return redirect('dashboard')
         else:
-            login_error = "Invalid login credentials."
-            print(login_error)
-            print(login_form.errors.as_json())
+            login_error = "Invalid username or password."
     return render(request, 'core/login_and_register.html', {
-        'form': login_form,
-        'register_form': CustomUserCreationForm(),
         'login_error': login_error,
         'active_tab': 'login',
     })
-    
-    
+
+User = get_user_model()
+
 def register(request):
-    register_form = CustomUserCreationForm(request.POST or None)
     register_error = None
-
     if request.method == 'POST':
-        if register_form.is_valid():
-            register_form.save()
-            return redirect('login')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        if password1 != password2:
+            register_error = "Passwords do not match."
+        elif User.objects.filter(username=username).exists():
+            register_error = "Username already exists."
         else:
-            register_error = "Registration failed. Please check the form."
-
+            user = User.objects.create_user(username=username, email=email, password=password1)
+            return redirect('login')
     return render(request, 'core/login_and_register.html', {
-        'form': CustomAuthenticationForm(),
-        'register_form': register_form,
         'register_error': register_error,
         'active_tab': 'register',
     })
