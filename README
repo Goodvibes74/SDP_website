@@ -18,7 +18,6 @@
     python manage.py runserver
 
 The application will start running at http://localhost:8000/.
-
 ### Accessing Key Pages
 - Once the server is running, you can access the following pages in        your web browser:
     1. Home: The landing page at http://localhost:8000/.
