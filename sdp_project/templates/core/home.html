@@ -1,8 +1,8 @@
-{% extends "core/base.html" %} {% block title %}Home{% endblock %} 
-
+{% extends "core/base.html" %} 
+{% block title %}Home{% endblock %} 
 {% block content %} {% comment %} Jumbotron hero section on home {% endcomment %}
 
-<div class="jumbotron text-left bg-light w-auto px-3 mb-4 rounded-3 border" style="height: 601.6px;">
+<div class="jumbotron text-left bg-light px-3 mb-4 rounded-3 border" style="height: 601.6px;">
   <div class="p-5 text-center bg-body-tertiary rounded-10">
     <svg
       class="bi mt-4 mb-3"
@@ -44,7 +44,7 @@
 </div>
 {% if user.is_authenticated %}
   <div class="row align-items-md-stretch">
-    <div class="col-md-6">
+    <div class="col-md-6 pb-2">   
       <div class="h-100 p-5 text-bg-dark rounded-3">
         <h2>Change the background</h2>
         <p>
@@ -60,7 +60,7 @@
         >
       </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 pb-2">
       <div class="h-100 p-5 bg-body-tertiary border rounded-3">
         <h2>Add borders</h2>
         <p>
