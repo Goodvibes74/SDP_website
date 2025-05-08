@@ -9,6 +9,7 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import render, redirect
 from .forms import SaleForm ,CustomUserCreationForm, CustomAuthenticationForm
 from .models import Sale
+from django.db.models import Count, Q
         
         
 def home(request):
@@ -28,7 +29,7 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             auth_login(request, user)
-            return redirect('dashboard')
+            return redirect('home')
         else:
             login_error = "Invalid username or password."
     return render(request, 'core/login_and_register.html', {
@@ -70,7 +71,8 @@ def sale_create(request):
         title = request.POST.get('title')
         description = request.POST.get('description')
         amount = request.POST.get('amount')
-        if not title or not description or not amount:
+        status = request.POST.get('status', 'pending')
+        if not title or not description or not amount or not status:
             error = "All fields are required."
         else:
             try:
@@ -79,14 +81,15 @@ def sale_create(request):
                     title=title,
                     description=description,
                     amount=amount,
-                    seller=request.user
+                    seller=request.user,
+                    status=status
                 )
                 return redirect('browse_sales')
             except ValueError:
                 error = "Amount must be a number."
-    return render(request, 'core/create_sale.html', {'error': error})
-# Edit a sale
+    return render(request, 'core/create_sale.html', {'error': error, 'sale': None})
 
+# Edit a sale
 @login_required
 def sale_edit(request, pk):
     sale = get_object_or_404(Sale, pk=pk, seller=request.user)
@@ -97,7 +100,8 @@ def sale_edit(request, pk):
         title = request.POST.get('title')
         description = request.POST.get('description')
         amount = request.POST.get('amount')
-        if not title or not description or not amount:
+        status = request.POST.get('status', sale.status)
+        if not title or not description or not amount or not status:
             error = "All fields are required."
         else:
             try:
@@ -105,6 +109,7 @@ def sale_edit(request, pk):
                 sale.title = title
                 sale.description = description
                 sale.amount = amount
+                sale.status = status
                 sale.save()
                 success = "Sale updated successfully!"
             except ValueError:
@@ -114,6 +119,7 @@ def sale_edit(request, pk):
         'error': error,
         'success': success,
     })
+
 def sale_delete(request, pk):
     sale = get_object_or_404(Sale, pk=pk, seller=request.user)
     if request.method == 'POST':
@@ -123,7 +129,19 @@ def sale_delete(request, pk):
 
 @login_required
 def dashboard(request):
-    return render(request, 'core/dashboard.html')
+    user = request.user
+    sales = Sale.objects.filter(seller=user)
+    total_sales = sales.count()
+    active_sales = sales.filter(status='active').count()
+    pending_sales = sales.filter(status='pending').count()
+    recent_sales = sales.order_by('-created_at')[:5]
+    return render(request, 'core/dashboard.html', {
+        'total_sales': total_sales,
+        'active_sales': active_sales,
+        'pending_sales': pending_sales,
+        'recent_sales': recent_sales,
+        'user': user,
+    })
 
 @login_required
 def logout(request):

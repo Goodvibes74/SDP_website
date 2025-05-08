@@ -1,10 +1,14 @@
-{% extends 'core/base.html' %} {% load static %} {% block title %} {% if sale%}
-Edit {% else %} Create {% endif %} Sale {% endblock %} {% block content %}
+{% extends 'core/base.html' %} 
+{% load static %} 
+{% block title %} 
+  {% if sale %}Edit{% else %}Create{% endif %} Sale 
+{% endblock %} 
+{% block content %}
 <div class="container ">
   {% if sale %}
-  <h2>Edit Sale</h2>
+    <h2>Edit Sale</h2>
   {% else %}
-  <h2>Create Sale</h2>
+    <h2>Create Sale</h2>
   {% endif %}
 
   <form method="post">
@@ -27,9 +31,7 @@ Edit {% else %} Create {% endif %} Sale {% endblock %} {% block content %}
         id="description"
         name="description"
         required
-      >
-{{ sale.description|default_if_none:'' }}</textarea
-      >
+      >{{ sale.description|default_if_none:'' }}</textarea>
     </div>
     <div class="mb-3">
       <label for="amount" class="form-label">Amount</label>
@@ -43,14 +45,26 @@ Edit {% else %} Create {% endif %} Sale {% endblock %} {% block content %}
         value="{{ sale.amount|default_if_none:'' }}"
       />
     </div>
+    <div class="mb-3">
+      <label for="status" class="form-label">Status</label>
+      <select class="form-select" id="status" name="status" required>
+        {% for key, value in sale.STATUS_CHOICES %}
+          <option value="{{ key }}" {% if sale.status == key %}selected{% endif %}>{{ value }}</option>
+        {% endfor %}
+        {% if not sale %}
+          <option value="pending" selected>Pending</option>
+        {% endif %}
+      </select>
+    </div>
     <button type="submit" class="btn btn-primary">
       {% if sale %}Update{% else %}Create{% endif %} Sale
     </button>
   </form>
   {% if error %}
-  <div class="alert alert-danger mt-2">{{ error }}</div>
-  {% endif %} {% if success %}
-  <div class="alert alert-success mt-2">{{ success }}</div>
+    <div class="alert alert-danger mt-2">{{ error }}</div>
+  {% endif %} 
+  {% if success %}
+    <div class="alert alert-success mt-2">{{ success }}</div>
   {% endif %}
 </div>
 {% endblock %}

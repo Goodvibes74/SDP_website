@@ -13,6 +13,8 @@
     <!-- Bootstrap Icons CSS -->
     <link rel="stylesheet" href="{% static 'css/bootstrap-icons.css' %}" />
     <!-- Custom CSS -->
+    {% load static %}
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon.png' %}">   
     <style>
       body {
         min-height: 100vh;
@@ -54,6 +56,8 @@
         color: #007bff;
       }
     </style>
+    <!-- Add Chart.js CDN in your base.html or dashboard.html -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
     <nav
