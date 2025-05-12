@@ -50,7 +50,7 @@ def register(request):
         elif User.objects.filter(username=username).exists():
             register_error = "Username already exists."
         else:
-            user = User.objects.create_user(username=username, email=email, password=password1)
+            user = User.objects.create_user(username=username, email=email, password1=password1)
             return redirect('login')
     return render(request, 'core/login_and_register.html', {
         'register_error': register_error,
@@ -67,7 +67,7 @@ def sale_list(request):
 def sale_create(request):
     error = None
     if request.method == 'POST':
-        customer = request.POST.get('title')
+        customer = request.POST.get('customer')  # FIXED: was 'title', should be 'customer'
         description = request.POST.get('description')
         amount = request.POST.get('amount')
         status = request.POST.get('status', 'pending')
@@ -86,7 +86,7 @@ def sale_create(request):
                 return redirect('browse_sales')
             except ValueError:
                 error = "Amount must be a number."
-    return render(request, 'core/create_sale.html', {'error': error, 'sale': None})
+    return render(request, 'core/create_sale.html', {'error': error, 'sale': None, 'status_choices': Sale.STATUS_CHOICES})
 
 # Edit a sale
 @login_required
@@ -96,23 +96,37 @@ def sale_edit(request, pk):
     success = None
 
     if request.method == 'POST':
-        title = request.POST.get('title')
+        # Only update fields that are present in the POST data
+        updated = False
+        customer = request.POST.get('customer')
         description = request.POST.get('description')
         amount = request.POST.get('amount')
-        status = request.POST.get('status', sale.status)
-        if not title or not description or not amount or not status:
-            error = "All fields are required."
-        else:
+        status = request.POST.get('status')
+
+        if customer is not None and customer != sale.customer:
+            sale.customer = customer
+            updated = True
+        if description is not None and description != sale.description:
+            sale.description = description
+            updated = True
+        if amount is not None:
             try:
-                amount = float(amount)
-                sale.title = title
-                sale.description = description
-                sale.amount = amount
-                sale.status = status
-                sale.save()
-                success = "Sale updated successfully!"
+                amount_val = float(amount)
+                if amount_val != float(sale.amount):
+                    sale.amount = amount_val
+                    updated = True
             except ValueError:
                 error = "Amount must be a number."
+        if status is not None and status != sale.status:
+            sale.status = status
+            updated = True
+        if not error and updated:
+            sale.save()
+            success = "Sale updated successfully!"
+        elif not error and not updated:
+            success = "No changes detected."
+        elif error:
+            pass
     return render(request, 'core/create_sale.html', {
         'sale': sale,
         'error': error,

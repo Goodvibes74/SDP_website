@@ -52,8 +52,8 @@
     <div class="mb-4">
       <label for="status" class="form-label">Status</label>
       <select class="form-select bg-secondary text-light border-0" id="status" name="status" required>
-        {% for key, value in sale.STATUS_CHOICES %}
-          <option value="{{ key }}" {% if sale.status == key %}selected{% endif %}>{{ value }}</option>
+        {% for key, value in status_choices %}
+          <option value="{{ key }}" {% if sale and sale.status == key %}selected{% endif %}>{{ value }}</option>
         {% endfor %}
         {% if not sale %}
           <option value="pending" selected>Pending</option>
@@ -61,7 +61,7 @@
       </select>
     </div>
 
-    <button type="submit" class="btn btn-primary w-100">
+    <button type="submit" class="btn btn-primary w-100" formaction="{% url 'browse_sales' %}">
       {% if sale %}Update{% else %}Create{% endif %} Sale
     </button>
   </form>

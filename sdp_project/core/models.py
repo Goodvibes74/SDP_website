@@ -20,6 +20,6 @@ class Sale(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     
     def __str__(self):
-        return self.title
+        return self.customer  # Changed from self.title to self.customer
 
 
