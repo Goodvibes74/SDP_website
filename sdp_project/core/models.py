@@ -12,7 +12,7 @@ class Sale(models.Model):
         ('pending', 'Pending'),
         ('closed', 'Closed'),
     ]
-    title = models.CharField(max_length=200)
+    customer = models.CharField(max_length=200)
     description = models.TextField()
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -1,7 +1,8 @@
 <!-- dashboard.html -->
-{% extends 'core/base.html' %} {% block content %}
+{% extends 'core/base.html' %} 
+{% block content %}
 <h2 class="mb-4">Dashboard</h2>
-<div class="row g-4">
+<div class="row g-4 mb-4">
   <div class="col-md-4">
     <div class="card text-center shadow-sm">
       <div class="card-body">
@@ -20,6 +21,15 @@
       </div>
     </div>
   </div>
+  <div class="col-md-4">
+    <div class="card text-center shadow-sm">
+      <div class="card-body">
+        <i class="bi bi-check-circle-fill display-4 text-success mb-2"></i>
+        <h5 class="card-title">Completed Sales</h5>
+        <p class="card-text display-4">{{ completed_sales }}</p>
+      </div>
+    </div>
+  </div>  
   <div class="col-md-4">
     <div class="card text-center shadow-sm">
       <div class="card-body">
@@ -61,9 +71,11 @@
     </div>
   </div>
   <div class="col-md-6">
-    <div class="card shadow-sm">
-      <div class="card-header"><i class="bi bi-person-circle"></i> Profile</div>
-      <div class="card-body">
+    <div class="card shadow-sm align-items-center">
+      <div class="card-header w-100 ">
+        <i class="bi bi-person-circle"></i> Profile</div>
+      <div class="card-body ">
+        <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="User Profile" class="rounded-circle profile-img mb-3" width="200" height="200">
         <p><strong>User:</strong> {{ user.username }}</p>
         <p><strong>Email:</strong> {{ user.email }}</p>
         <!-- Add more profile info as needed -->
@@ -71,7 +83,7 @@
     </div>
   </div>
 </div>
-
+<script src="chart.js"></script>
 <div class="row mt-5">
   <div class="col-12 mb-4">
     <div class="card shadow-sm">
@@ -82,4 +94,32 @@
     </div>
   </div>
 </div>
+<script>
+  const ctx = document.getElementById('salesChart').getContext('2d');
+  const salesChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: {{ chart_labels|safe }},
+      datasets: [{
+        label: 'Sales (UGX)',
+        data: {{ chart_data|safe }},
+        fill: true,
+        borderColor: '#4f8cff',
+        backgroundColor: 'rgba(79,140,255,0.1)',
+        tension: 0.4,
+        pointRadius: 4,
+        pointBackgroundColor: '#4f8cff'
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false }
+      },
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+</script>
 {% endblock %}

@@ -27,7 +27,7 @@
         {% if sales %} {% for sale in sales %}
         <tr>
           <td>{{ sale.id }}</td>
-          <td>{{ sale.title }}</td>
+          <td>{{ sale.customer }}</td>
           <td>{{ sale.description|truncatechars:50 }}</td>
           <td>UGX {{ sale.amount }}</td>
           <td>

@@ -6,7 +6,7 @@ from .models import CustomUser
 class SaleForm(forms.ModelForm):
     class Meta:
         model = Sale
-        fields = ['title', 'description', 'amount', 'seller']
+        fields = ['customer', 'description', 'amount', 'seller']
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:

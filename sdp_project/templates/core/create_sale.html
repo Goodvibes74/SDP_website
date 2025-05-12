@@ -46,6 +46,17 @@
       />
     </div>
     <div class="mb-3">
+      <label for="customer" class="form-label">Customer</label>
+      <input
+        type="text"
+        class="form-control"
+        id="customer"
+        name="customer"
+        required
+        value="{{ sale.customer|default_if_none:'' }}"
+      />
+    </div>
+    <div class="mb-3">
       <label for="status" class="form-label">Status</label>
       <select class="form-select" id="status" name="status" required>
         {% for key, value in sale.STATUS_CHOICES %}

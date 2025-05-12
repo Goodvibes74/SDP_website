@@ -46,9 +46,6 @@
           font-size: 1rem;
         }
       }
-      .navbar {
-        background-color: #f8f9fa;
-      }
       .navbar .nav-link {
         color: #000;
       }
@@ -56,16 +53,14 @@
         color: #007bff;
       }
     </style>
-    <!-- Add Chart.js CDN in your base.html or dashboard.html -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  </head>
-  <body>
+    </head>
+  <body class="bg-dark">
     <nav
-      class="navbar navbar-expand-lg bg-body-tertiary rounded fixed-top shadow-sm"
+      class="navbar navbar-expand-lg rounded-bottom bg-gradient fixed-top shadow-lg"
       aria-label="Eleventh navbar example"
       >
-          <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'home' %}">
+      <div class="container-fluid">
+        <a class="navbar-brand text-white" href="{% url 'home' %}">
           <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 49 49" fill="none">
             <rect width="48.1311" height="48.13" rx="24.065" fill="#5D5FEF"/>
             <g clip-path="url(#clip0_72_750)">
@@ -82,7 +77,7 @@
             </defs>
             </svg>
           Insighter
-        </a>
+          </a>
         <button
           class="navbar-toggler collapsed"
           type="button"
@@ -99,7 +94,7 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <a
-                class="nav-link{% if request.resolver_match.url_name == 'home' %} active{% endif %}"
+                class="nav-link{% if request.resolver_match.url_name == 'home' %} active{% endif %} text-white"
                 href="{% url 'home' %}"
                 >Home</a
               >
@@ -107,25 +102,34 @@
             {% if user.is_authenticated %}
             <li class="nav-item">
               <a
-                class="nav-link{% if request.resolver_match.url_name == 'dashboard' %} active{% endif %}"
-                href="{% url 'dashboard' %}"
-                >Dashboard</a
-              >
+                class="nav-link{% if request.resolver_match.url_name == 'dashboard' %} active{% endif %} text-white"
+                href="{% url 'dashboard' %}">
+                Dashboard
+                </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'create_sale' %}">Create Sale</a>
+              <a class="nav-link {% if request.resolver_match.url_name == 'create_sale' %} active{% endif %} text-white" 
+              href="{% url 'create_sale' %}">
+              Create Sale</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'browse_sales' %}"
-                >Browse Sales</a
-              >
+              <a class="nav-link {% if request.resolver_match.url_name == 'browse_sales' %} active{% endif %} text-white " 
+              href="{% url 'browse_sales' %}">
+                Browse Sales
+              </a>
             </li>
             {% endif %}
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'about' %}">About</a>
+              <a class="nav-link {% if request.resolver_match.url_name == 'about' %} active{% endif %} text-white" 
+              href="{% url 'about' %}">
+                About
+              </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+              <a class="nav-link {% if request.resolver_match.url_name == 'contact' %} active{% endif %} text-white" 
+              href="{% url 'contact' %}">
+                Contact
+              </a>
             </li>
           </ul>
           <div class="d-flex">
@@ -210,5 +214,8 @@
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/popper.min.js' %}"></script>
+    <!-- Add Chart.js CDN in your base.html or dashboard.html -->
+    {% comment %} <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> {% endcomment %}
+  
   </body>
 </html>

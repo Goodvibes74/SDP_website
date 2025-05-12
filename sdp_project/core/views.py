@@ -10,6 +10,8 @@ from django.shortcuts import render, redirect
 from .forms import SaleForm ,CustomUserCreationForm, CustomAuthenticationForm
 from .models import Sale
 from django.db.models import Count, Q
+from django.db.models.functions import TruncMonth
+from django.db.models import Sum
         
         
 def home(request):
@@ -68,17 +70,17 @@ def sale_list(request):
 def sale_create(request):
     error = None
     if request.method == 'POST':
-        title = request.POST.get('title')
+        customer = request.POST.get('title')
         description = request.POST.get('description')
         amount = request.POST.get('amount')
         status = request.POST.get('status', 'pending')
-        if not title or not description or not amount or not status:
+        if not customer or not description or not amount or not status:
             error = "All fields are required."
         else:
             try:
                 amount = float(amount)
                 sale = Sale.objects.create(
-                    title=title,
+                    customer=customer,
                     description=description,
                     amount=amount,
                     seller=request.user,
@@ -134,11 +136,24 @@ def dashboard(request):
     total_sales = sales.count()
     active_sales = sales.filter(status='active').count()
     pending_sales = sales.filter(status='pending').count()
+    completed_sales = sales.filter(status='completed').count()
     recent_sales = sales.order_by('-created_at')[:5]
+    
+    # # Sales per month for the chart
+    # sales_by_month = (
+    #     sales.annotate(month=TruncMonth('created_at'))
+    #     .values('month')
+    #     .annotate(total=Sum('amount'))
+    #     .order_by('month')
+    # )
+    # chart_labels = [s['month'].strftime('%b %Y') for s in sales_by_month]
+    # chart_data = [float(s['total']) for s in sales_by_month]
+    
     return render(request, 'core/dashboard.html', {
         'total_sales': total_sales,
         'active_sales': active_sales,
         'pending_sales': pending_sales,
+        'completed_sales': completed_sales,
         'recent_sales': recent_sales,
         'user': user,
     })
