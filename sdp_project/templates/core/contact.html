@@ -4,103 +4,141 @@
 {% block content %}
 <style>
   ul {
-      list-style-type: none;
+    list-style-type: none;
+    padding-left: 0;
+  }
+  .profile-card {
+    background: #23272b;
+    color: #e0e0e0;
+    border: none;
+    border-radius: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.3);
+  }
+  .profile-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+  .profile-img {
+    border: 4px solid #4e8cff;
+    box-shadow: 0 2px 8px rgba(78,140,255,0.2);
+    object-fit: cover;
+  }
+  .social-icons a {
+    color: #4e8cff;
+    font-size: 1.5rem;
+    margin: 0 0.3rem;
+    transition: color 0.2s;
+  }
+  .social-icons a:hover {
+    color: #2563eb;
+  }
+  .card-title {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: #fff;
+  }
+  .card-text ul li {
+    font-size: 1.05rem;
+    margin-bottom: 0.2rem;
+  }
+  .contact-email {
+    color: #4e8cff;
+    font-weight: 500;
+    text-decoration: underline;
+  }
+  @media (max-width: 767px) {
+    .profile-img {
+      width: 120px !important;
+      height: 120px !important;
+    }
+    .card-title {
+      font-size: 1.1rem;
+    }
   }
 </style>
-  <div class="container py-5">
-    <h2 class="mb-4">Contact Us</h2>
-    <p class="mb-5">
-      For more information, email us at <a href="mailto:example@example.com">moneyworth.com</a>.
-    </p>
-
-    <div class="row g-4">
-      <!-- Profile Card 1 -->
-      <div class="col-md-6">
-        <div class="card profile-card h-100 text-center shadow-sm">
-          <div class="card-body">
-            <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="User Profile" class="rounded-circle profile-img mb-3" width="200" height="200">
-            <div class="align-items-center ">
-              <h3 class="card-title mb-2">Mila Samantha Likiya</h3>
-              <p class="card-text text-muted mb-3">
-                <ul class="p-0 text-secondary">
-                  <li>Systems Analyst</li>
-                  <li>UI/UX designer</li>
-                  <li>Documentarian</li>
-                </ul>  
-              </p>
-            </div>
-            <div class="social-icons mb-4 align-items-center">
-              <a href="https://www.instagram.com/sammila71?igsh=MXF2ZnA1ejZtenRqZQ%3D%3D&utm_source=qr" class="me-2"><i class="bi bi-instagram"></i></a>
-              <a href="#" class="me-2"><i class="bi bi-twitter-x"></i></a>
-              <a href="#" class="me-2"><i class="bi bi-tiktok"></i></a>
-            </div>
+<div class="container py-5">
+  <h2 class="mb-4 text-center text-emphasis">Contact Us</h2>
+  <p class="mb-5 text-center">
+    For more information, email us at <a href="mailto:example@example.com" class="contact-email">moneyworth.com</a>.
+  </p>
+  <div class="row g-4 justify-content-center">
+    <!-- Profile Card 1 -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card profile-card h-100 text-center">
+        <div class="card-body d-flex flex-column align-items-center">
+          <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="User Profile" class="rounded-circle profile-img mb-3" width="150" height="150">
+          <h3 class="card-title mb-2">Mila Samantha Likiya</h3>
+          <ul class="card-text text-light mb-3">
+            <li>Systems Analyst</li>
+            <li>UI/UX Designer</li>
+            <li>Documentarian</li>
+          </ul>
+          <div class="social-icons mb-2">
+            <a href="https://www.instagram.com/sammila71?igsh=MXF2ZnA1ejZtenRqZQ%3D%3D&utm_source=qr" target="_blank"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-twitter-x"></i></a>
+            <a href="#"><i class="bi bi-tiktok"></i></a>
           </div>
         </div>
       </div>
-
-      <!-- Profile Card 2 -->
-      <div class="col-md-6">
-        <div class="card profile-card h-100 text-center shadow-sm">
-          <div class="card-body">
-            <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="User Profile" class="rounded-circle profile-img mb-3" width="200">
-            <h3 class="card-title mb-2">Sseruwagi Marvin Don</h3>
-            <p class="card-text text-muted mb-3">
-              <ul class="p-0 text-secondary">
-                <li>Chief operations officer</li>
-                <li>UI/UX Co-designer</li>
-                <li>Project Co-ordinator</li>
-              </ul>
-          </p>
-            <div class="social-icons mb-4">
-              <a href="https://www.instagram.com/donmarvin077?utm_source=qr&igsh=MWltMzV0YzduaTVudw==" class="me-2"><i class="bi bi-instagram"></i></a>
-              <a href="#" class="me-2"><i class="bi bi-twitter-x"></i></a>
-              <a href="#" class="me-2"><i class="bi bi-tiktok"></i></a>
-            </div>
+    </div>
+    <!-- Profile Card 2 -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card profile-card h-100 text-center">
+        <div class="card-body d-flex flex-column align-items-center">
+          <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="User Profile" class="rounded-circle profile-img mb-3" width="150" height="150">
+          <h3 class="card-title mb-2">Sseruwagi Marvin Don</h3>
+          <ul class="card-text text-light mb-3">
+            <li>Chief Operations Officer</li>
+            <li>UI/UX Co-designer</li>
+            <li>Project Co-ordinator</li>
+          </ul>
+          <div class="social-icons mb-2">
+            <a href="https://www.instagram.com/donmarvin077?utm_source=qr&igsh=MWltMzV0YzduaTVudw==" target="_blank"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-twitter-x"></i></a>
+            <a href="#"><i class="bi bi-tiktok"></i></a>
           </div>
         </div>
       </div>
-
-      <!-- Profile Card 3 -->
-      <div class="col-md-6">
-        <div class="card profile-card h-100 text-center shadow-sm">
-          <div class="card-body">
-            <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="User Profile" class="rounded-circle profile-img mb-3" width="200">
-            <h3 class="card-title mb-2">Kazibwe David Nelson</h3>
-            <p class="card-text text-muted mb-3">              
-              <ul class="p-0 text-secondary">
-                <li>Project manager</li>
-                <li> Chief Web Developer</li>
-                <li>UI/UX design consultant</li></ul></p>
-            <div class="social-icons mb-4">
-              <a href="https://www.instagram.com/goodvibes_12004?igsh=bzNzcWVneDd4Y2Nj" class="me-2"><i class="bi bi-instagram"></i></a>
-              <a href="#" class="me-2"><i class="bi bi-twitter-x"></i></a>
-              <a href="#" class="me-2"><i class="bi bi-tiktok"></i></a>
-            </div>
+    </div>
+    <!-- Profile Card 3 -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card profile-card h-100 text-center">
+        <div class="card-body d-flex flex-column align-items-center">
+          <img src="https://randomuser.me/api/portraits/men/3.jpg" alt="User Profile" class="rounded-circle profile-img mb-3" width="150" height="150">
+          <h3 class="card-title mb-2">Kazibwe David Nelson</h3>
+          <ul class="card-text text-light mb-3">
+            <li>Project Manager</li>
+            <li>Chief Web Developer</li>
+            <li>UI/UX Design Consultant</li>
+          </ul>
+          <div class="social-icons mb-2">
+            <a href="https://www.instagram.com/goodvibes_12004?igsh=bzNzcWVneDd4Y2Nj" target="_blank"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-twitter-x"></i></a>
+            <a href="#"><i class="bi bi-tiktok"></i></a>
           </div>
         </div>
       </div>
-
-      <!-- Profile Card 4 -->
-      <div class="col-md-6">
-        <div class="card profile-card h-100 text-center shadow-sm">
-          <div class="card-body">
-            <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="User Profile" class="rounded-circle profile-img mb-3" width="200">
-            <h3 class="card-title mb-2">Mayanja Joel Stephen</h3>
-            <p class="card-text text-muted mb-3">              
-              <ul class="p-0 text-secondary">
-                <li>Chief Technology Officer</li>
-                <li>API and Frontend Specialist</li>
-                <li> Backend Guru and consultant</li>
-              </ul>
-            </p>
-            <div class="social-icons mb-4">
-              <a href="https://www.instagram.com/its_moen?utm_source=qr&igsh=MXdtNmVxdnJwbnJlag==" class="me-2"><i class="bi bi-instagram"></i></a>
-              <a href="#" class="me-2"><i class="bi bi-twitter-x"></i></a>
-              <a href="#" class="me-2"><i class="bi bi-tiktok"></i></a>
-            </div>
+    </div>
+    <!-- Profile Card 4 -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card profile-card h-100 text-center">
+        <div class="card-body d-flex flex-column align-items-center">
+          <img src="https://randomuser.me/api/portraits/men/4.jpg" alt="User Profile" class="rounded-circle profile-img mb-3" width="150" height="150">
+          <h3 class="card-title mb-2">Mayanja Joel Stephen</h3>
+          <ul class="card-text text-light mb-3">
+            <li>Chief Technology Officer</li>
+            <li>API and Frontend Specialist</li>
+            <li>Backend Guru and Consultant</li>
+          </ul>
+          <div class="social-icons mb-2">
+            <a href="https://www.instagram.com/its_moen?utm_source=qr&igsh=MXdtNmVxdnJwbnJlag==" target="_blank"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-twitter-x"></i></a>
+            <a href="#"><i class="bi bi-tiktok"></i></a>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 {% endblock %}

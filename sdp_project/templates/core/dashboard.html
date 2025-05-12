@@ -1,125 +1,50 @@
-<!-- dashboard.html -->
-{% extends 'core/base.html' %} 
+{% extends 'core/base.html' %}
 {% block content %}
-<h2 class="mb-4">Dashboard</h2>
-<div class="row g-4 mb-4">
-  <div class="col-md-4">
-    <div class="card text-center shadow-sm">
-      <div class="card-body">
-        <i class="bi bi-bar-chart-fill display-4 text-primary mb-2"></i>
-        <h5 class="card-title">Total Sales</h5>
-        <p class="card-text display-4">{{ total_sales }}</p>
+<div class="mt-2"></i> 
+<h3 class="mb-2">Welcome <strong class="text-emphasis">{{user.username}}</strong> to your Dashboard</h3>
+</div> 
+  <br/>
+    <!-- Hero Section --> 
+  <div class="row g-4 mb-4">
+    {% for card in cards %}
+      <div class="col-lg-3 col-md-4 col-sm-6"> <!-- Adjusted column size for card -->
+        <div class="card text-center shadow-sm">
+          <div class="card-body">
+            <i class="bi {{ card.icon }} display-4 {{ card.color }} mb-2"></i>
+            <h5 class="card-title">{{ card.title }}</h5>
+            <p class="card-text display-4">{{ card.value }}</p>
+          </div>
+        </div>
       </div>
-    </div>
+    {% endfor %}
   </div>
-  <div class="col-md-4">
-    <div class="card text-center shadow-sm">
-      <div class="card-body">
-        <i class="bi bi-bag-check-fill display-4 text-success mb-2"></i>
-        <h5 class="card-title">Active Sales</h5>
-        <p class="card-text display-4">{{ active_sales }}</p>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="card text-center shadow-sm">
-      <div class="card-body">
-        <i class="bi bi-check-circle-fill display-4 text-success mb-2"></i>
-        <h5 class="card-title">Completed Sales</h5>
-        <p class="card-text display-4">{{ completed_sales }}</p>
-      </div>
-    </div>
-  </div>  
-  <div class="col-md-4">
-    <div class="card text-center shadow-sm">
-      <div class="card-body">
-        <i class="bi bi-clock-history display-4 text-warning mb-2"></i>
-        <h5 class="card-title">Pending Sales</h5>
-        <p class="card-text display-4">{{ pending_sales }}</p>
-      </div>
-    </div>
-  </div>
-</div>
 
-<div class="row mt-4">
-  <div class="col text-end">
-    <a href="{% url 'browse_sales' %}" class="btn btn-outline-primary me-2">
-      <i class="bi bi-list"></i> Browse Sales
-    </a>
-    <a href="{% url 'create_sale' %}" class="btn btn-primary">
-      <i class="bi bi-plus-circle"></i> Create Sale
-    </a>
+  <div class="row mt-4 mb-4">
+    <div class="col text-end">
+      <a href="{% url 'browse_sales' %}" class="btn btn-outline-primary me-2">
+        <i class="bi bi-list"></i> Browse Sales
+      </a>
+      <a href="{% url 'create_sale' %}" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Create Sale
+      </a>
+    </div>
   </div>
-</div>
 
-<div class="row mt-5">
-  <div class="col-md-6">
+  <div  >
     <div class="card shadow-sm">
       <div class="card-header"><i class="bi bi-list-ul"></i> Recent Sales</div>
-      <ul class="list-group list-group-flush">
-        {% for sale in recent_sales %}
-        <li
-          class="list-group-item d-flex justify-content-between align-items-center"
-        >
-          {{ sale.title }}
-          <span class="badge bg-primary rounded-pill">{{ sale.status }}</span>
-        </li>
-        {% empty %}
-        <li class="list-group-item">No recent sales.</li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <div class="card shadow-sm align-items-center">
-      <div class="card-header w-100 ">
-        <i class="bi bi-person-circle"></i> Profile</div>
-      <div class="card-body ">
-        <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="User Profile" class="rounded-circle profile-img mb-3" width="200" height="200">
-        <p><strong>User:</strong> {{ user.username }}</p>
-        <p><strong>Email:</strong> {{ user.email }}</p>
-        <!-- Add more profile info as needed -->
+        <ul class="list-group list-group-flush">
+          {% for sale in recent_sales %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              {{ sale.customer }}
+              <span class="badge bg-primary rounded-pill">{{ sale.status }}</span>
+            </li>
+          {% empty %}
+            <li class="list-group-item">No recent sales.</li>
+          {% endfor %}
+        </ul>
       </div>
     </div>
   </div>
-</div>
-<script src="chart.js"></script>
-<div class="row mt-5">
-  <div class="col-12 mb-4">
-    <div class="card shadow-sm">
-      <div class="card-header"><i class="bi bi-graph-up"></i> Sales Report</div>
-      <div class="card-body">
-        <canvas id="salesChart" height="80"></canvas>
-      </div>
-    </div>
-  </div>
-</div>
-<script>
-  const ctx = document.getElementById('salesChart').getContext('2d');
-  const salesChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: {{ chart_labels|safe }},
-      datasets: [{
-        label: 'Sales (UGX)',
-        data: {{ chart_data|safe }},
-        fill: true,
-        borderColor: '#4f8cff',
-        backgroundColor: 'rgba(79,140,255,0.1)',
-        tension: 0.4,
-        pointRadius: 4,
-        pointBackgroundColor: '#4f8cff'
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false }
-      },
-      scales: {
-        y: { beginAtZero: true }
-      }
-    }
-  });
-</script>
+
 {% endblock %}

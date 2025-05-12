@@ -1,88 +1,57 @@
-{% extends 'core/base.html' %} 
-{% load static %} 
-{% block title %} 
-  {% if sale %}Edit{% else %}Create{% endif %} Sale 
-{% endblock %} 
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}
+  {% if sale %}Edit{% else %}Create{% endif %} Sale
+{% endblock %}
+
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
-<style>
-  body.dark-mode {
-    background-color: #181a1b !important;
-    color: #e0e0e0 !important;
-  }
-  .dark-mode .container {
-    background: #23272b;
-    border-radius: 12px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.4);
-    padding: 2rem 2.5rem;
-  }
-  .dark-mode .form-control, .dark-mode .form-select {
-    background-color: #23272b;
-    color: #e0e0e0;
-    border: 1px solid #444;
-  }
-  .dark-mode .form-label {
-    color: #e0e0e0;
-  }
-  .dark-mode .btn-primary {
-    background-color: #4e8cff;
-    border-color: #4e8cff;
-  }
-  .dark-mode .btn-primary:hover {
-    background-color: #2563eb;
-    border-color: #2563eb;
-  }
-  .dark-mode .alert-danger {
-    background: #3a1a1a;
-    color: #ffb3b3;
-    border-color: #a94442;
-  }
-  .dark-mode .alert-success {
-    background: #1a3a1a;
-    color: #b3ffb3;
-    border-color: #42a944;
-  }
-  .theme-toggle {
-    float: right;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    background: none;
-    border: none;
-    color: inherit;
-    font-size: 1.2rem;
-    cursor: pointer;
-  }
-</style>
-<button class="theme-toggle" id="themeToggle" title="Toggle dark mode">
-  <span id="themeIcon">🌙</span>
-</button>
-<div class="container mt-5 mb-5 p-4 shadow">
-  {% if sale %}
-    <h2>Edit Sale</h2>
-  {% else %}
-    <h2>Create Sale</h2>
-  {% endif %}
+<div class="container mt-5 text-light bg-dark p-4 rounded shadow">
+  <h2 class="mb-4">{% if sale %}Edit{% else %}Create{% endif %} Sale</h2>
+
   <form method="post">
     {% csrf_token %}
-    <div class="mb-3">
-      <label for="title" class="form-label">Title</label>
-      <input type="text" class="form-control" id="title" name="title" required value="{{ sale.title|default_if_none:'' }}" />
-    </div>
-    <div class="mb-3">
-      <label for="description" class="form-label">Description</label>
-      <textarea class="form-control" id="description" name="description" required>{{ sale.description|default_if_none:'' }}</textarea>
-    </div>
-    <div class="mb-3">
-      <label for="amount" class="form-label">Amount</label>
-      <input type="number" min=0 class="form-control" id="amount" name="amount" required value="{{ sale.amount|default_if_none:'' }}" />
-    </div>
+    
     <div class="mb-3">
       <label for="customer" class="form-label">Customer</label>
-      <input type="text" class="form-control" id="customer" name="customer" required value="{{ sale.customer|default_if_none:'' }}" />
+      <input
+        type="text"
+        class="form-control bg-secondary text-light border-0"
+        id="customer"
+        name="customer"
+        required
+        value="{{ sale.customer|default_if_none:'' }}"
+      />
     </div>
+    
+
     <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea
+        class="form-control bg-secondary text-light border-0"
+        id="description"
+        name="description"
+        required
+      >{{ sale.description|default_if_none:'' }}</textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="amount" class="form-label">Amount</label>
+      <input
+        type="number"
+        min="0"
+        class="form-control bg-secondary text-light border-0"
+        id="amount"
+        name="amount"
+        required
+        value="{{ sale.amount|default_if_none:'' }}"
+      />
+    </div>
+
+
+    <div class="mb-4">
       <label for="status" class="form-label">Status</label>
-      <select class="form-select" id="status" name="status" required>
+      <select class="form-select bg-secondary text-light border-0" id="status" name="status" required>
         {% for key, value in sale.STATUS_CHOICES %}
           <option value="{{ key }}" {% if sale.status == key %}selected{% endif %}>{{ value }}</option>
         {% endfor %}
@@ -91,38 +60,18 @@
         {% endif %}
       </select>
     </div>
+
     <button type="submit" class="btn btn-primary w-100">
       {% if sale %}Update{% else %}Create{% endif %} Sale
     </button>
   </form>
+
   {% if error %}
-    <div class="alert alert-danger mt-2">{{ error }}</div>
+    <div class="alert alert-danger mt-3">{{ error }}</div>
   {% endif %}
+  
   {% if success %}
-    <div class="alert alert-success mt-2">{{ success }}</div>
+    <div class="alert alert-success mt-3">{{ success }}</div>
   {% endif %}
 </div>
-<script>
-  // Theme toggle logic
-  const themeToggle = document.getElementById('themeToggle');
-  const themeIcon = document.getElementById('themeIcon');
-  function setTheme(dark) {
-    if (dark) {
-      document.body.classList.add('dark-mode');
-      themeIcon.textContent = '☀️';
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.body.classList.remove('dark-mode');
-      themeIcon.textContent = '🌙';
-      localStorage.setItem('theme', 'light');
-    }
-  }
-  themeToggle.addEventListener('click', () => {
-    setTheme(!document.body.classList.contains('dark-mode'));
-  });
-  // On load, set theme from localStorage
-  if (localStorage.getItem('theme') === 'dark') {
-    setTheme(true);
-  }
-</script>
 {% endblock %}

@@ -1,15 +1,12 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth import get_user_model
 from django.shortcuts import render, redirect
-from .forms import SaleForm ,CustomUserCreationForm, CustomAuthenticationForm
 from .models import Sale
-from django.db.models import Count, Q
 from django.db.models.functions import TruncMonth
 from django.db.models import Sum
         
@@ -133,29 +130,39 @@ def sale_delete(request, pk):
 def dashboard(request):
     user = request.user
     sales = Sale.objects.filter(seller=user)
-    total_sales = sales.count()
-    active_sales = sales.filter(status='active').count()
-    pending_sales = sales.filter(status='pending').count()
-    completed_sales = sales.filter(status='completed').count()
-    recent_sales = sales.order_by('-created_at')[:5]
+
+    # Totals
+    total_sales      = sales.count()
+    active_sales     = sales.filter(status='active').count()
+    pending_sales    = sales.filter(status='pending').count()
+    completed_sales  = sales.filter(status='completed').count()
     
-    # # Sales per month for the chart
-    # sales_by_month = (
-    #     sales.annotate(month=TruncMonth('created_at'))
-    #     .values('month')
-    #     .annotate(total=Sum('amount'))
-    #     .order_by('month')
-    # )
-    # chart_labels = [s['month'].strftime('%b %Y') for s in sales_by_month]
-    # chart_data = [float(s['total']) for s in sales_by_month]
+    recent_sales = sales.order_by('-created_at')[:5]
+
+    cards = [
+        { 'icon': 'bi-bar-chart-fill',    'color': 'text-primary', 'title': 'Total Sales',     'value': total_sales     },
+        { 'icon': 'bi-bag-check-fill',     'color': 'text-success', 'title': 'Active Sales',    'value': active_sales    },
+        { 'icon': 'bi-clock-history',      'color': 'text-warning', 'title': 'Pending Sales',   'value': pending_sales   },
+        { 'icon': 'bi-check-circle-fill',  'color': 'text-success', 'title': 'Completed Sales', 'value': completed_sales },
+    ]
+
+    sales_by_month = (
+        sales
+        .annotate(month=TruncMonth('created_at'))
+        .values('month')
+        .annotate(total=Sum('amount'))
+        .order_by('month')
+    )
+    chart_labels = [entry['month'].strftime('%b %Y') for entry in sales_by_month]
+    chart_data   = [float(entry['total'])             for entry in sales_by_month]
+
     
     return render(request, 'core/dashboard.html', {
-        'total_sales': total_sales,
-        'active_sales': active_sales,
-        'pending_sales': pending_sales,
-        'completed_sales': completed_sales,
-        'recent_sales': recent_sales,
-        'user': user,
+        'user':           user,
+        'cards':          cards,
+        'recent_sales':   recent_sales,
+        'chart_labels':   chart_labels,
+        'chart_data':     chart_data,
     })
 
 @login_required

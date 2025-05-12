@@ -11,7 +11,7 @@ class SaleForm(forms.ModelForm):
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ("username", "email", "password1",)  # Add other fields if needed
+        fields = ("username", "email", "password1",)
 
 class CustomAuthenticationForm(AuthenticationForm):
     class Meta:
