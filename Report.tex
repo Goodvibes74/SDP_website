@@ -11,13 +11,21 @@
 \maketitle
 
 \section{Introduction}
-Moneyworth is a web application designed to help users manage and browse sales listings. The main features include user authentication, a dashboard, browsing and creating sales, and profile management. The application provides a modern, responsive interface with a navigation bar, hero section on the Home page, and a footer on all pages. Key pages include Home, Dashboard, Browse Sales, Create Sale, About, and Contact.
+Moneyworth is a web application designed to help users manage and browse sales listings.
+The main features include user authentication, a dashboard, browsing and creating sales, 
+and profile management. The application provides a modern, 
+responsive interface with a navigation bar, 
+hero section on the Home page, and a footer on all pages.
+Key pages include Home, Dashboard, Browse Sales, Create Sale, About, and Contact.
 
 \section{Part a: HTML and Django Template Code Implementation}
 This section presents the HTML and Django template code used for the project layout.
 
 \subsection{Base Template Explanation}
-The base template, \texttt{base.html}, defines the overall structure of the site. It includes a navigation bar, a hero (jumbotron) section (on the Home page), and a footer. Content blocks are defined using Django's template block tags, allowing child templates to override specific sections.
+The base template, \texttt{base.html}, defines the overall structure of the site. 
+It includes a navigation bar, a hero (jumbotron) section (on the Home page), and a footer. 
+Content blocks are defined using Django's template block tags, allowing child templates to 
+override specific sections.
 
 \begin{verbatim}
 <!-- templates/core/base.html -->
@@ -40,7 +48,8 @@ The base template, \texttt{base.html}, defines the overall structure of the site
 \end{verbatim}
 
 \subsection{Child Template Example}
-A child template, such as \texttt{home.html}, extends the base template and fills in the content block:
+A child template, such as \texttt{home.html}, extends the base template and fills in the 
+content block:
 
 \begin{verbatim}
 <!-- templates/core/home.html -->
@@ -64,7 +73,8 @@ Key Django template tags used include:
 These tags help organize templates, promote code reuse, and simplify static file management.
 
 \subsection{Bonus: URL and View Structure}
-The \texttt{urls.py} and \texttt{views.py} files connect URLs to views and templates. For example:
+The \texttt{urls.py} and \texttt{views.py} files connect URLs to views and templates. 
+For example:
 
 \begin{verbatim}
 # core/urls.py
@@ -89,7 +99,10 @@ def home(request):
 \end{verbatim}
 
 \section{Part b: Benefits of Django for Responsive Web Apps}
-Django is ideal for building responsive web applications due to its template system, which separates logic from presentation. It integrates easily with CSS frameworks like Bootstrap, enabling mobile-friendly designs. Django also provides built-in security, scalability, and rapid development features, making it suitable for modern web apps.
+Django is ideal for building responsive web applications due to its template system, 
+which separates logic from presentation. It integrates easily with CSS frameworks like 
+Bootstrap, enabling mobile-friendly designs. Django also provides built-in security, 
+scalability, and rapid development features, making it suitable for modern web apps.
 
 \section{Part c: Linking Static CSS and JavaScript in Django}
 To include static files in Django:
