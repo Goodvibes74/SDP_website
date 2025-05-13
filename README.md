@@ -1,28 +1,71 @@
-# Django Sales App Project Documentation
-## README (Simple)
+# Moneyworth
 
-### Overview
-    Django Sales App is a simple web application built with Django that allows users to manage sales listings. It includes pages for browsing sales, creating new sales entries, viewing a user dashboard, managing user profiles, and more. The design includes a navigation bar, a hero (jumbotron) section on the Home page, and a footer on all pages.
+A simple web application built with Django for managing sales listings. Users can browse, create, and manage sales entries, view dashboards, and manage their profiles. The app features a modern UI with a navigation bar, hero section, and footer.
 
-### Setup Instructions
-1. Clone the repository: Download the project code to your local machine.
-2. Create a virtual environment (optional):
-    python -m venv env
-    source env/bin/activate  # On Windows use `env\Scripts\activate`
-3. Install dependencies:
-    pip install django
-    (Alternatively, run pip install -r requirements.txt if a requirements file is provided.)
-4. Apply database migrations:
-    python manage.py migrate
-5. Run the development server:
-    python manage.py runserver
+---
 
-The application will start running at http://localhost:8000/.
-### Accessing Key Pages
-- Once the server is running, you can access the following pages in        your web browser:
-    1. Home: The landing page at http://localhost:8000/.
-    2. Dashboard: User dashboard (might require login) at http://localhost:8000/dashboard/.
-    3. Browse Sales: View all sales listings at http://localhost:8000/sales/.
-    4. Create Sale: Form to create a new sale entry at http://127.0.0.1:8000/sales/create/.
-    5. About: Information about the application at http://localhost:8000/about/.
-    6. Contact: Contact information page at http://localhost:8000/contact/.
+## Features
+
+- User authentication (login/register)
+- Dashboard for users
+- Browse all sales listings
+- Create new sale entries
+- User profile management
+- About and Contact pages
+- Responsive design with Bootstrap
+
+## Technologies Used
+
+- Python 3
+- Django
+- Bootstrap 5
+
+## Setup Instructions
+
+1. **Clone the repository:**
+   ```sh
+   git clone <repo-url>
+   cd SDP_website
+   ```
+2. **Create a virtual environment (optional but recommended):**
+   ```sh
+   python -m venv env
+   .\env\Scripts\activate  # On Windows
+   # Or on macOS/Linux:
+   # source env/bin/activate
+   ```
+3. **Install dependencies:**
+   ```sh
+   pip install -r requirements.txt
+   # Or, if requirements.txt is missing:
+   pip install django
+   ```
+4. **Apply database migrations:**
+   ```sh
+   python sdp_project/manage.py migrate
+   ```
+5. **Run the development server:**
+   ```sh
+   python sdp_project/manage.py runserver
+   ```
+
+The application will be available at [http://localhost:8000/](http://localhost:8000/).
+
+---
+
+## Accessing Key Pages
+
+- **Home:** [http://localhost:8000/](http://localhost:8000/)
+- **Dashboard:** [http://localhost:8000/dashboard/](http://localhost:8000/dashboard/) _(loginrequired)_
+- **Browse Sales:** [http://localhost:8000/sales/](http://localhost:8000/sales/)
+- **Create Sale:** [http://localhost:8000/sales/create/](http://localhost:8000/sales/create/)
+- **About:** [http://localhost:8000/about/](http://localhost:8000/about/)
+- **Contact:** [http://localhost:8000/contact/](http://localhost:8000/contact/)
+
+---
+
+## Usage
+
+- Register a new account or log in.
+- Browse existing sales or create a new sale entry.
+- Access your dashboard to manage your listings and profile.
