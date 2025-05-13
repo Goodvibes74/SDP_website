@@ -51,7 +51,7 @@ def register(request):
             register_error = "Username already exists."
         else:
             user = User.objects.create_user(username=username, email=email, password=password1)
-            return redirect('home')
+            return redirect('dashboard')
     return render(request, 'core/login_and_register.html', {
         'register_error': register_error,
         'active_tab': 'register',

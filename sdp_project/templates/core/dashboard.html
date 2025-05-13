@@ -35,13 +35,27 @@
     <div class="card shadow-sm">
       <div class="card-header d-flex justify-content-between">
         <strong>Customer</strong>
-        <strong>Status</strong>
+        <strong>Amount</strong>
       </div>
         <ul class="list-group list-group-flush">
-          {% for sale in recent_sales %}
+            {% for sale in recent_sales %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
               {{ sale.customer }}
-              <span class="badge bg-primary rounded-pill">{{ sale.status }}</span>
+              <br>
+              <span class="badge 
+                {% if sale.status == 'active' %}bg-success
+                {% elif sale.status == 'pending' %}bg-warning text-dark
+                {% elif sale.status == 'closed' %}bg-primary
+                {% else %}bg-secondary
+                {% endif %} rounded-pill">
+                {{ sale.status|capfirst }}
+              </span>
+              </div>
+              <div class="text-end">
+              <small class="text-muted d-block">UGX {{ sale.amount }}</small>
+              <small class="text-muted">{{ sale.created_at|date:"M d, Y" }}</small>
+              </div>
             </li>
           {% empty %}
             <li class="list-group-item">No recent sales.</li>
