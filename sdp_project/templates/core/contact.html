@@ -1,4 +1,5 @@
 {% extends "core/base.html" %}
+{% load static%}
 {% block title %}Contact{% endblock %}
 
 {% block content %}
@@ -58,7 +59,7 @@
   }
 </style>
 <div class="container py-5">
-  <h2 class="mb-4 text-center text-emphasis">Contact Us</h2>
+  <h2 class="mb-4 text-center text-emphasis"><strong>Contact Us</strong></h2>
   <p class="mb-5 text-center">
     For more information, email us at <a href="mailto:example@example.com" class="contact-email">moneyworth.com</a>.
   </p>
@@ -105,7 +106,7 @@
     <div class="col-md-6 col-lg-4">
       <div class="card profile-card h-100 text-center">
         <div class="card-body d-flex flex-column align-items-center">
-          <img src="https://randomuser.me/api/portraits/men/3.jpg" alt="User Profile" class="rounded-circle profile-img mb-3" width="150" height="150">
+          <img src="{% static 'images/David.jpg'%}" alt="User Profile" class="rounded-circle profile-img mb-3" width="150" height="150">
           <h3 class="card-title mb-2">Kazibwe David Nelson</h3>
           <ul class="card-text text-light mb-3">
             <li>Project Manager</li>

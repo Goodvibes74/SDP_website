@@ -7,8 +7,7 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth import get_user_model
 from django.shortcuts import render, redirect
 from .models import Sale
-from django.db.models.functions import TruncMonth
-from django.db.models import Sum
+from django.db.models import Q
 
         
         
@@ -60,9 +59,15 @@ def register(request):
 
 @login_required
 def sale_list(request):
-    sales = Sale.objects.filter(seller=request.user).order_by('-created_at')
-    print(sales)
-    return render(request, 'core/browse_sale.html', { 'sales': sales})
+    query = request.GET.get('q', '')
+    # Only show sales for the current user, but allow searching
+    sales = Sale.objects.filter(seller=request.user)
+    if query:
+        sales = sales.filter(
+            Q(customer__icontains=query) | Q(description__icontains=query)
+        )
+    sales = sales.order_by('-created_at')
+    return render(request, 'core/browse_sale.html', {'sales': sales})
 
 # Create a sale
 @login_required

@@ -7,7 +7,7 @@
 
 {% block content %}
 <div class="container mt-5 text-light bg-dark p-4 rounded shadow">
-  <h2 class="mb-4">{% if sale %}Edit{% else %}Create{% endif %} Sale</h2>
+  <h2 class="mb-4 text-white">{% if sale %}Edit{% else %}Create{% endif %} Sale</h2>
 
   <form action="{% if sale %}{% url 'update_sale' sale.id %}{% else %}{% url 'create_sale' %}{% endif %}" method="post">
     {% csrf_token %}
