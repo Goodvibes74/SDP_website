@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from .views import (
     home, contact, about, dashboard, login, register,
-    sale_list, sale_create, sale_edit, sale_delete, logout,
+    sale_list, sale_create, sale_edit, sale_delete, logout,update
 )
 
 urlpatterns = [
@@ -21,6 +21,7 @@ urlpatterns = [
     # These views are protected by the login_required decorator and are only accessible to logged-in users
     path('sales/',                  sale_list,                       name='browse_sales'),
     path('sales/create/',           sale_create,                     name='create_sale'),
+    path('sales/update/<int:sale_id>/',           update,                          name='update_sale'),
     path('sales/<int:pk>/edit/',    sale_edit,                       name='edit_sale'),
     path('sales/<int:pk>/delete/',  sale_delete,                     name='delete_sale'),
 ]

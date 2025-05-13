@@ -23,6 +23,6 @@ The application will start running at http://localhost:8000/.
     1. Home: The landing page at http://localhost:8000/.
     2. Dashboard: User dashboard (might require login) at http://localhost:8000/dashboard/.
     3. Browse Sales: View all sales listings at http://localhost:8000/sales/.
-    4. Create Sale: Form to create a new sale entry at http://localhost:8000/sales/create/.
+    4. Create Sale: Form to create a new sale entry at http://127.0.0.1:8000/sales/create/.
     5. About: Information about the application at http://localhost:8000/about/.
     6. Contact: Contact information page at http://localhost:8000/contact/.

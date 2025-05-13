@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect
 from .models import Sale
 from django.db.models.functions import TruncMonth
 from django.db.models import Sum
+
         
         
 def home(request):
@@ -50,7 +51,7 @@ def register(request):
         elif User.objects.filter(username=username).exists():
             register_error = "Username already exists."
         else:
-            user = User.objects.create_user(username=username, email=email, password1=password1)
+            user = User.objects.create_user(username=username, email=email, password=password1)
             return redirect('login')
     return render(request, 'core/login_and_register.html', {
         'register_error': register_error,
@@ -60,19 +61,22 @@ def register(request):
 @login_required
 def sale_list(request):
     sales = Sale.objects.filter(seller=request.user).order_by('-created_at')
-    return render(request, 'core/browse_sale.html', { 'sales': sales })
+    print(sales)
+    return render(request, 'core/browse_sale.html', { 'sales': sales})
 
 # Create a sale
 @login_required
 def sale_create(request):
     error = None
     if request.method == 'POST':
+        print("Entered post")
         customer = request.POST.get('customer')  # FIXED: was 'title', should be 'customer'
         description = request.POST.get('description')
         amount = request.POST.get('amount')
         status = request.POST.get('status', 'pending')
         if not customer or not description or not amount or not status:
             error = "All fields are required."
+            print("Fied missing")
         else:
             try:
                 amount = float(amount)
@@ -83,9 +87,13 @@ def sale_create(request):
                     seller=request.user,
                     status=status
                 )
+                print(sale)
+                print("Success")
                 return redirect('browse_sales')
             except ValueError:
                 error = "Amount must be a number."
+                
+    print("We have errors")   
     return render(request, 'core/create_sale.html', {'error': error, 'sale': None, 'status_choices': Sale.STATUS_CHOICES})
 
 # Edit a sale
@@ -131,6 +139,7 @@ def sale_edit(request, pk):
         'sale': sale,
         'error': error,
         'success': success,
+        'status_choices': Sale.STATUS_CHOICES
     })
 
 def sale_delete(request, pk):
@@ -160,24 +169,39 @@ def dashboard(request):
         { 'icon': 'bi-check-circle-fill',  'color': 'text-success', 'title': 'Completed Sales', 'value': completed_sales },
     ]
 
-    sales_by_month = (
-        sales
-        .annotate(month=TruncMonth('created_at'))
-        .values('month')
-        .annotate(total=Sum('amount'))
-        .order_by('month')
-    )
-    chart_labels = [entry['month'].strftime('%b %Y') for entry in sales_by_month]
-    chart_data   = [float(entry['total'])             for entry in sales_by_month]
-
-    
     return render(request, 'core/dashboard.html', {
         'user':           user,
         'cards':          cards,
         'recent_sales':   recent_sales,
-        'chart_labels':   chart_labels,
-        'chart_data':     chart_data,
     })
+    
+@login_required
+def update(request, sale_id):
+    error = None
+    sale = get_object_or_404(Sale, id=sale_id, seller=request.user)
+    if request.method == 'POST':
+        print("Entered post")
+        description = request.POST.get('description')
+        amount = request.POST.get('amount')
+        status = request.POST.get('status', 'pending')
+        if not description or not amount or not status:
+            error = "All fields are required."
+            print("Field missing")
+        else:
+            try:
+                amount = float(amount)
+                sale.description = description
+                sale.amount = amount
+                sale.status = status
+                sale.save()
+                print("Success")
+                return redirect('browse_sales')
+            except ValueError:
+                error = "Amount must be a number."
+                
+    print("We have errors")   
+    return render(request, 'core/create_sale.html', {'error': error, 'sale': sale, 'status_choices': Sale.STATUS_CHOICES})
+
 
 @login_required
 def logout(request):

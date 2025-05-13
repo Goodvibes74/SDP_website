@@ -9,7 +9,7 @@
 <div class="container mt-5 text-light bg-dark p-4 rounded shadow">
   <h2 class="mb-4">{% if sale %}Edit{% else %}Create{% endif %} Sale</h2>
 
-  <form method="post">
+  <form action="{% if sale %}{% url 'update_sale' sale.id %}{% else %}{% url 'create_sale' %}{% endif %}" method="post">
     {% csrf_token %}
     
     <div class="mb-3">
@@ -21,6 +21,7 @@
         name="customer"
         required
         value="{{ sale.customer|default_if_none:'' }}"
+        {% if sale %} placeholder = sale.customer.username {% endif %}
       />
     </div>
     
@@ -61,7 +62,7 @@
       </select>
     </div>
 
-    <button type="submit" class="btn btn-primary w-100" formaction="{% url 'browse_sales' %}">
+    <button type="submit" class="btn btn-primary w-100" >
       {% if sale %}Update{% else %}Create{% endif %} Sale
     </button>
   </form>
