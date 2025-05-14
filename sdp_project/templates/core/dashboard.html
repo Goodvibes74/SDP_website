@@ -46,7 +46,7 @@
               <span class="badge 
                 {% if sale.status == 'active' %}bg-success
                 {% elif sale.status == 'pending' %}bg-warning text-dark
-                {% elif sale.status == 'closed' %}bg-primary
+                {% elif sale.status == 'completed' %}bg-primary
                 {% else %}bg-secondary
                 {% endif %} rounded-pill">
                 {{ sale.status|capfirst }}

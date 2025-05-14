@@ -163,7 +163,7 @@ def dashboard(request):
     total_sales      = sales.count()
     active_sales     = sales.filter(status='active').count()
     pending_sales    = sales.filter(status='pending').count()
-    completed_sales  = sales.filter(status='closed').count()
+    completed_sales  = sales.filter(status='completed').count()
     
     recent_sales = sales.order_by('-created_at')[:5]
 

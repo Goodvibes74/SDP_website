@@ -53,8 +53,8 @@
             <span class="badge bg-success">Active</span>
             {% elif sale.status == 'pending' %}
             <span class="badge bg-warning text-dark">Pending</span>
-            {% elif sale.status == 'closed' %}
-            <span class="badge bg-primary">Closed</span>
+            {% elif sale.status == 'completed' %}
+            <span class="badge bg-primary">Completed</span>
             {% else %}
             <span class="badge bg-secondary">{{ sale.status|capfirst }}</span>
             {% endif %}
