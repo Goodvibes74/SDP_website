@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container mt-5 text-light bg-dark p-4 rounded shadow">
+<div class="container mt-5 text-light bg-dark border border-secondary p-4 rounded shadow">
   <h2 class="mb-4 text-white">{% if sale %}Edit{% else %}Create{% endif %} Sale</h2>
 
   <form action="{% if sale %}{% url 'update_sale' sale.id %}{% else %}{% url 'create_sale' %}{% endif %}" method="post">
