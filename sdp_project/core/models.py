@@ -10,7 +10,7 @@ class Sale(models.Model):
     STATUS_CHOICES = [
         ('active', 'Active'),
         ('pending', 'Pending'),
-        ('complete', 'Completed'),
+        ('completed', 'Completed'),
     ]
     customer = models.CharField(max_length=200)
     description = models.TextField()
