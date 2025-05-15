@@ -1,4 +1,30 @@
 {
   "markdown.validate.enabled": true,
-  "svg.preview.background": "editor"
+  "latex-workshop.latex.env": {
+    "TEXMF_OUTPUT_DIRECTORY": "out"
+  },
+  "latex-workshop.latex.tools": [
+    {
+      "name": "pdflatex",
+      "command": "pdflatex",
+      "args": [
+        "--shell-escape",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "%DOC%"
+      ]
+    }
+  ],
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "pdflatex (shell-escape)",
+      "tools": ["pdflatex"]
+    }
+  ],
+  "cSpell.words": [
+    "Moneyworth",
+    "stylesheet",
+    "urlpatterns"
+  ]
 }

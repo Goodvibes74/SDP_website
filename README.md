@@ -133,7 +133,8 @@ Here are some screenshots showcasing the application's interface:
 
 ## Folder Structure
 
-```SDP_website/
+```
+SDP_website/
 ├── README.md
 ├── requirements.txt
 ├── Report.pdf
