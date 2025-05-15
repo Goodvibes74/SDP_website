@@ -7,7 +7,6 @@ from .views import (
 urlpatterns = [
     # Public pages accessible to all users
     path('',                                home,                            name='home'),
-    path('dashboard/',                      dashboard,                       name='dashboard'),
     path('about/',                          about,                           name='about'),
     path('contact/',                        contact,                         name='contact'),
 
@@ -18,6 +17,7 @@ urlpatterns = [
 
     
     # Pages accessible only to authenticated users
+    path('dashboard/',                      dashboard,                       name='dashboard'),
     path('sales/',                          sale_list,                       name='browse_sales'),
     path('sales/create/',                   sale_create,                     name='create_sale'),
     path('sales/update/<int:sale_id>/',     update,                          name='update_sale'),
